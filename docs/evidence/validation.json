@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "pilot": false,
+  "checks": {
+    "world_hash_matches": true,
+    "sea_state_1": true,
+    "normal_plane_arming": true,
+    "real_fdm_not_scripted_path": true,
+    "aircraft_comparable_size": true,
+    "runway_takeoff": true,
+    "rover_firmware_armed": true,
+    "archived_camera_frame_set": true,
+    "camera_follows_aircraft": true,
+    "all_mission_phases": true,
+    "autonomous_landing_and_disarm": true,
+    "touchdown_on_runway": true,
+    "touchdown_sink_below_2mps": true,
+    "stopped_on_runway": true,
+    "image_based_second_pass_replanned": true,
+    "estimator_uses_navigation_not_truth": true,
+    "blank_image_has_no_detection": true,
+    "independent_pixel_estimates_match_live": true,
+    "at_least_5_airborne_detections": true,
+    "image_track_span_at_least_1s": true,
+    "position_error_p95_below_3m": true,
+    "boat_moves_during_mission": true,
+    "detections_on_both_search_passes": true,
+    "FixedWing_Full_Mission_Clean.mp4_decodes": true,
+    "Onboard_Camera_Clean.mp4_decodes": true
+  },
+  "camera_frames": 773,
+  "image_detections": 16,
+  "image_track_span_s": 58.208,
+  "detections_per_search_pass": {
+    "3": 9,
+    "6": 7
+  },
+  "position_error_m": {
+    "median": 0.7712493946101608,
+    "p95": 1.263224675341794,
+    "maximum": 1.3028069036636665
+  },
+  "touchdown": {
+    "t": 272.806578,
+    "east": 91.152451,
+    "north": 0.59269,
+    "sink_mps": 0.355118
+  },
+  "final_position_ned_m": [
+    0.298248,
+    112.247955,
+    -0.1
+  ],
+  "maximum_altitude_m": 45.87524,
+  "videos": {
+    "FixedWing_Full_Mission_Clean.mp4": {
+      "format": {
+        "duration": "255.800000",
+        "size": "213503505"
+      }
+    },
+    "Onboard_Camera_Clean.mp4": {
+      "format": {
+        "duration": "255.800000",
+        "size": "84886537"
+      }
+    }
+  },
+  "limitations": "Native ArduPlane aerodynamic/flat-ground FDM drives Gazebo airframe and calibrated camera; Gazebo simulates boat/waves. No aircraft-water/terrain collision coupling, real-vessel/airframe calibration, camera blur/noise or actual flight validation. Image tracking is an intermittent two-pass survey, not persistent lock under occlusion."
+}

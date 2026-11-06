@@ -1,0 +1,181 @@
+{
+  "source": "Blue Robotics M200 motor + weedless propeller official charts",
+  "voltage_V": 16,
+  "method": "Paired at identical ESC PWM; piecewise linear interpolation of signed static thrust vs signed RPM.",
+  "scope": "Static test mapping, not an advance-ratio/loaded-propeller or motor transient model. Vehicle thrust limits remain separate.",
+  "urls": [
+    "https://docs.bluerobotics.com/thrusters/m200weedless_force_plot.js",
+    "https://docs.bluerobotics.com/thrusters/m200weedless_rpm_plot.js"
+  ],
+  "source_sha256": {
+    "m200weedless_force_plot.js": "973e5a42fb70e04878db3757bdfba4f0e79ccf4a981d74637a8a5dcd09ff886c",
+    "m200weedless_rpm_plot.js": "c2d20868a8e0a5e8349b360dcb51139272afe7f7e50448fe56bf939ec05c9794"
+  },
+  "samples": [
+    {
+      "pwm_us": 1100,
+      "thrust_N": -27.556686499999998,
+      "rpm": -2824
+    },
+    {
+      "pwm_us": 1110,
+      "thrust_N": -27.360553499999998,
+      "rpm": -2767
+    },
+    {
+      "pwm_us": 1136,
+      "thrust_N": -25.889556,
+      "rpm": -2723
+    },
+    {
+      "pwm_us": 1162,
+      "thrust_N": -23.732093,
+      "rpm": -2654
+    },
+    {
+      "pwm_us": 1188,
+      "thrust_N": -21.672696499999997,
+      "rpm": -2542
+    },
+    {
+      "pwm_us": 1214,
+      "thrust_N": -20.005565999999998,
+      "rpm": -2454
+    },
+    {
+      "pwm_us": 1240,
+      "thrust_N": -17.9461695,
+      "rpm": -2320
+    },
+    {
+      "pwm_us": 1266,
+      "thrust_N": -15.396440499999999,
+      "rpm": -2224
+    },
+    {
+      "pwm_us": 1292,
+      "thrust_N": -13.925442999999998,
+      "rpm": -2080
+    },
+    {
+      "pwm_us": 1318,
+      "thrust_N": -11.76798,
+      "rpm": -1933
+    },
+    {
+      "pwm_us": 1344,
+      "thrust_N": -9.610517,
+      "rpm": -1761
+    },
+    {
+      "pwm_us": 1370,
+      "thrust_N": -8.041452999999999,
+      "rpm": -1591
+    },
+    {
+      "pwm_us": 1396,
+      "thrust_N": -5.88399,
+      "rpm": -1376
+    },
+    {
+      "pwm_us": 1422,
+      "thrust_N": -4.020726499999999,
+      "rpm": -1149
+    },
+    {
+      "pwm_us": 1448,
+      "thrust_N": -2.3535959999999996,
+      "rpm": -888
+    },
+    {
+      "pwm_us": 1474,
+      "thrust_N": -0.8825985,
+      "rpm": -580
+    },
+    {
+      "pwm_us": 1500,
+      "thrust_N": 0.0,
+      "rpm": 0
+    },
+    {
+      "pwm_us": 1526,
+      "thrust_N": 2.0593964999999996,
+      "rpm": 537
+    },
+    {
+      "pwm_us": 1552,
+      "thrust_N": 4.903325,
+      "rpm": 824
+    },
+    {
+      "pwm_us": 1578,
+      "thrust_N": 8.041452999999999,
+      "rpm": 1060
+    },
+    {
+      "pwm_us": 1604,
+      "thrust_N": 11.473780499999998,
+      "rpm": 1270
+    },
+    {
+      "pwm_us": 1630,
+      "thrust_N": 15.494507,
+      "rpm": 1477
+    },
+    {
+      "pwm_us": 1656,
+      "thrust_N": 18.9268345,
+      "rpm": 1633
+    },
+    {
+      "pwm_us": 1682,
+      "thrust_N": 23.241760499999998,
+      "rpm": 1802
+    },
+    {
+      "pwm_us": 1708,
+      "thrust_N": 27.066353999999997,
+      "rpm": 1940
+    },
+    {
+      "pwm_us": 1734,
+      "thrust_N": 31.675479499999998,
+      "rpm": 2089
+    },
+    {
+      "pwm_us": 1760,
+      "thrust_N": 35.0097405,
+      "rpm": 2207
+    },
+    {
+      "pwm_us": 1786,
+      "thrust_N": 39.1285335,
+      "rpm": 2342
+    },
+    {
+      "pwm_us": 1812,
+      "thrust_N": 42.756994,
+      "rpm": 2434
+    },
+    {
+      "pwm_us": 1838,
+      "thrust_N": 47.464186,
+      "rpm": 2548
+    },
+    {
+      "pwm_us": 1864,
+      "thrust_N": 51.190712999999995,
+      "rpm": 2643
+    },
+    {
+      "pwm_us": 1890,
+      "thrust_N": 53.4462425,
+      "rpm": 2715
+    },
+    {
+      "pwm_us": 1900,
+      "thrust_N": 55.2114395,
+      "rpm": 2751
+    }
+  ]
+}

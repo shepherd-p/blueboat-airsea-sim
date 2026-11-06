@@ -1,0 +1,8 @@
+# Dimensions are BLACK-border side lengths, excluding the white quiet zone.
+family: tag36h11
+id: 0
+size_m: 0.432
+sheet_size_m: 0.54
+body_to_marker_translation_m: [0.0, 0.0, 0.1576]
+body_to_marker_rpy_rad: [0.0, 0.0, 0.0]
+# Marker x/y align with boat forward/port; marker z points upward.

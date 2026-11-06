@@ -1,0 +1,16 @@
+{
+  "max_thrust": 40.20726499999999,
+  "reverse_thrust_ratio": 0.6853658536585366,
+  "thruster_separation": 0.5888,
+  "max_speed": 3.0,
+  "max_yaw_rate": 0.8,
+  "surge_linear": 3.0,
+  "surge_quadratic": 7.934947777777777,
+  "yaw_linear": 2.0,
+  "yaw_quadratic": 1.0,
+  "surge_kp": 22.0,
+  "yaw_kp": 8.0,
+  "command_timeout": 0.5,
+  "feedback_timeout": 0.5,
+  "thrust_deadband": 0.02
+}

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <world name="blueboat_water">
+    <gravity>0 0 -9.80665</gravity>
+    <physics name="step_2ms" type="ignored">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="blueboat-buoyancy-system" name="gz::sim::systems::BlueBoatBuoyancy">
+      <graded_buoyancy>
+        <default_density>1000.0</default_density>
+        <density_change>
+          <above_depth>0</above_depth>
+          <density>0</density>
+        </density_change>
+      </graded_buoyancy>
+      <enable>blueboat::base_link</enable>
+      <waves>
+        <ramp_seconds>3.0</ramp_seconds>
+        <wave>
+          <amplitude>0.06</amplitude>
+          <wavelength>6.0</wavelength>
+          <direction_deg>20</direction_deg>
+          <phase>0</phase>
+        </wave>
+        <wave>
+          <amplitude>0.025</amplitude>
+          <wavelength>3.5</wavelength>
+          <direction_deg>80</direction_deg>
+          <phase>1.2</phase>
+        </wave>
+        <wave>
+          <amplitude>0.015</amplitude>
+          <wavelength>8.0</wavelength>
+          <direction_deg>-30</direction_deg>
+          <phase>2.1</phase>
+        </wave>
+      </waves>
+    </plugin>
+    <light name="sun" type="directional">
+      <pose>0 0 20 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <direction>-0.3 0.3 -1</direction>
+    </light>
+    <include>
+      <uri>model://blueboat_ocean_visual</uri>
+    </include>
+    <include>
+      <uri>model://blueboat_ocean</uri>
+      <pose>0 0 0.01116959 0 0 0</pose>
+      <name>blueboat</name>
+    </include>
+    <scene>
+      <ambient>.6 .6 .6 1</ambient>
+      <background>.7 .8 .9 1</background>
+      <grid>false</grid>
+      <sky />
+    </scene>
+    <gui fullscreen="false">
+      <plugin filename="MinimalScene" name="3D View">
+        <gz-gui>
+          <property key="showTitleBar" type="bool">false</property>
+          <property key="state" type="string">docked</property>
+        </gz-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <camera_pose>2 -2 1.5 0 0.36 2.35</camera_pose>
+      </plugin>
+      <plugin filename="GzSceneManager" name="Scene Manager">
+        <gz-gui>
+          <property key="state" type="string">floating</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="showTitleBar" type="bool">false</property>
+          <property key="resizable" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      <plugin filename="InteractiveViewControl" name="Interactive View Control">
+        <gz-gui>
+          <property key="state" type="string">floating</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="showTitleBar" type="bool">false</property>
+          <property key="resizable" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      <plugin filename="EntityContextMenuPlugin" name="Entity Context Menu">
+        <gz-gui>
+          <property key="state" type="string">floating</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="showTitleBar" type="bool">false</property>
+          <property key="resizable" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      <plugin filename="BlueBoatVisuals" name="BlueBoatVisuals" />
+    </gui>
+  </world>
+</sdf>

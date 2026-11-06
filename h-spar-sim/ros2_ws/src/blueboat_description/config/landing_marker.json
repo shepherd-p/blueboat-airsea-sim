@@ -1,0 +1,108 @@
+{
+  "enabled": true,
+  "family": "tag36h11",
+  "id": 0,
+  "sheet_size_m": 0.54,
+  "black_border_size_m": 0.432,
+  "quiet_border_modules": 1,
+  "panel_size_m": [
+    0.64,
+    0.56,
+    0.006
+  ],
+  "panel_center_m": [
+    0,
+    0,
+    0.154445061
+  ],
+  "marker_center_m": [
+    0,
+    0,
+    0.1576
+  ],
+  "binary_cells_black_border_included": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "source": "OpenCV DICT_APRILTAG_36h11, ID0; standard public fiducial.",
+  "scope": "Proposed flush removable panel over the open center frame. Visual only: no added mass, collision or UAV touchdown validation. Panel/support/flag removal remain design decisions.",
+  "dimension_convention": "Detector size is the outside BLACK border (0.432 m), not the full white sheet (0.54 m). Pattern has 8x8 cells plus one white quiet cell on each side."
+}

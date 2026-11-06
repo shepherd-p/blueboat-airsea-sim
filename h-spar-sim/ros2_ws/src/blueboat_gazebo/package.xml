@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>blueboat_gazebo</name><version>0.1.0</version>
+  <description>Isolated Gazebo rotated-buoyancy backport and rigid-body twin-thruster actuation.</description>
+  <maintainer email="maintainer@example.invalid">Fangwei</maintainer>
+  <license>Apache-2.0</license>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>gz_sim_vendor</depend><depend>gz_plugin_vendor</depend>
+  <depend>gz_transport_vendor</depend>
+  <depend>gz_gui_vendor</depend><depend>gz_rendering_vendor</depend>
+  <depend>qtbase5-dev</depend><depend>qtdeclarative5-dev</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

@@ -1,0 +1,32 @@
+{
+  "name": "blueboat",
+  "length_m": 1.2,
+  "beam_m": 0.93,
+  "dry_mass_kg": 14.5,
+  "battery_mass_kg": 2.4,
+  "payload_mass_kg": 0.0,
+  "payload_center_m": [0.0, 0.0, 0.25],
+  "payload_inertia_kg_m2": [0.0, 0.0, 0.0],
+  "base_com_m": [0.0, 0.0, 0.02],
+  "buoyancy_separation_m": 0.74,
+  "thruster_separation_m": 0.5888,
+  "thruster_x_m": -0.5075,
+  "thruster_z_m": -0.1355,
+  "total_forward_thrust_kgf": 8.2,
+  "reverse_thrust_ratio": 0.6853658536585366,
+  "max_speed_mps": 3.0,
+  "water_density_kg_m3": 1000.0,
+  "gravity_mps2": 9.80665,
+  "buoyancy_box_m": [0.95, 0.09, 0.22],
+  "base_inertia_kg_m2": [2.374, 1.551, 3.803],
+  "damping_linear": [3.0, 18.0, 45.0, 6.0, 6.0, 2.0],
+  "damping_quadratic": [7.934947777777777, 30.0, 30.0, 2.0, 2.0, 1.0],
+  "added_mass_enabled": false,
+  "notes": {
+    "official": "Dimensions, dry mass, combined payload budget and speed from product/datasheet. 8.2 kgf is whole-vehicle static thrust, NOT per motor.",
+    "battery": "2.4 kg for two batteries is manufacturer's product-table example; actual lab battery set is unconfirmed.",
+    "geometry": "Motor axes estimated from official RevA CAD rotor geometry: x=-0.5075, y=+/-0.2944, z=-0.1355 m. These replace the earlier 0.74 m hull-center spacing used for the thrust arms. Equivalent buoyancy boxes retain 0.74 m hull-center spacing. Confirm COM and motor axes on the lab boat.",
+    "propulsion": "Quasi-static 16 V M200 + weedless curve from paired manufacturer thrust/RPM samples. Whole-vehicle forward limit remains 8.2 kgf; reverse is conservatively capped at the measured 2.81 kgf per motor. RPM under way can differ due to inflow, voltage and installation; these corrections and motor transients remain uncalibrated.",
+    "estimates": "Inertia, COM, equivalent buoyancy boxes and damping are engineering assumptions. Surge damping fits the 3 m/s/8.2 kgf envelope, not measured resistance data. No added mass or waves in baseline."
+  }
+}

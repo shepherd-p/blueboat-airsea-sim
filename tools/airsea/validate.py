@@ -1,0 +1,142 @@
+"""Independent flight/vision acceptance using archived evidence, never live truth control."""
+from pathlib import Path
+import argparse
+import csv
+import hashlib
+import json
+import math
+import subprocess
+
+import cv2
+import numpy as np
+
+
+def rotation(q):
+    w,x,y,z=np.array(q)/np.linalg.norm(q)
+    return np.array([[1-2*(y*y+z*z),2*(x*y-z*w),2*(x*z+y*w)],
+                     [2*(x*y+z*w),1-2*(x*x+z*z),2*(y*z-x*w)],
+                     [2*(x*z-y*w),2*(y*z+x*w),1-2*(x*x+y*y)]])
+
+
+def validate(out,pilot=False):
+    out=out.resolve();manifest=json.loads((out/'session_manifest.json').read_text())
+    cfg=json.loads((out/'mission_config.json').read_text())
+    states=[json.loads(line) for line in (out/'native_fdm.jsonl').read_text().splitlines()]
+    rows=list(csv.DictReader((out/'airborne_observations.csv').open()))
+    events=json.loads((out/'flight_events.json').read_text())
+    calibration=json.loads((out/'airborne_camera_calibration.json').read_text())
+    inputs=json.loads((out/'input_hashes.json').read_text())
+    t=np.array([s['timestamp'] for s in states]);positions=np.array([s['position'] for s in states])
+    ground_height=.1;alt=-positions[:,2]
+    airborne=np.where(alt>2)[0];assert len(airborne),'No flight'
+    lift_index=airborne[0];ground=np.where((np.arange(len(states))>lift_index)&(alt<=.101))[0]
+    touchdown_index=int(ground[0]) if len(ground) else None
+    runway=cfg['runway']
+    def on_runway(p):return runway['x_min_m']<=p[1]<=runway['x_max_m'] and abs(p[0]-runway['center_y_m'])<runway['width_m']/2
+    touchdown=states[touchdown_index] if touchdown_index else None
+    before=states[touchdown_index-1] if touchdown_index else None
+    last=states[-1]
+    checks={
+        'world_hash_matches':hashlib.sha256((out/'world.sdf').read_bytes()).hexdigest()==inputs['world_sdf_sha256'],
+        'sea_state_1':manifest['sea_state']==1 and json.loads((out/'profile.json').read_text())['target_hm0_m']==.05,
+        'normal_plane_arming':manifest['normal_plane_arming'] and any(e['event']=='arming_ack' and e['result']==0 for e in events),
+        'real_fdm_not_scripted_path':len(states)>1000 and np.all(np.diff(t)>0),
+        'aircraft_comparable_size':1<=cfg['aircraft']['wingspan_m']/1.2<=2,
+        'runway_takeoff':on_runway(positions[lift_index]) and alt.max()>25,
+        'rover_firmware_armed':manifest['rover_armed'],
+        'archived_camera_frame_set':len(rows)==len(list((out/'onboard_frames').glob('*.jpg'))),
+        'camera_follows_aircraft':np.ptp([float(r['plane_x']) for r in rows])>150 and np.ptp([float(r['plane_z']) for r in rows])>20,
+    }
+    if not pilot:
+        checks.update({
+            'all_mission_phases':set(range(1,len(cfg['mission']))).issubset({e['seq'] for e in events if e['event']=='mission_current'}),
+            'autonomous_landing_and_disarm':manifest['status']=='completed' and any(e['event']=='autonomous_disarm_after_landing' for e in events),
+            'touchdown_on_runway':bool(touchdown and on_runway(touchdown['position'])),
+            'touchdown_sink_below_2mps':bool(before and 0<=before['velocity'][2]<2),
+            'stopped_on_runway':on_runway(last['position']) and np.linalg.norm(last['velocity'])<.5,
+            'image_based_second_pass_replanned':manifest['image_based_second_pass_replanned'] and any(e['event']=='image_based_waypoint_update_ack' and e['result']==0 for e in events),
+        })
+    K=np.array([[calibration['fx'],0,calibration['cx']],[0,calibration['fy'],calibration['cy']],[0,0,1]])
+    size=calibration['black_border_m'];s=size/2
+    obj=np.array([[-s,s,0],[s,s,0],[s,-s,0],[-s,-s,0]],dtype=np.float64)
+    C=np.array([[0,-1,0],[0,0,-1],[1,0,0]])
+    down=np.array([[0,0,1],[0,1,0],[-1,0,0]])
+    params=cv2.aruco.DetectorParameters_create();params.cornerRefinementMethod=cv2.aruco.CORNER_REFINE_SUBPIX;params.cornerRefinementWinSize=3
+    dictionary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_36h11)
+    def solve(image,row):
+        corners,ids,_=cv2.aruco.detectMarkers(cv2.cvtColor(image,cv2.COLOR_BGR2GRAY),dictionary,parameters=params)
+        if ids is None or 0 not in ids:return None
+        pixels=corners[list(ids.flatten()).index(0)].reshape(4,2)
+        _,rvecs,tvecs,_=cv2.solvePnPGeneric(obj,pixels,K,None,flags=cv2.SOLVEPNP_IPPE_SQUARE)
+        candidates=[]
+        for rv,tv in zip(rvecs,tvecs):
+            if tv[2,0]<=0:continue
+            projected=cv2.projectPoints(obj,rv,tv,K,None)[0].reshape(4,2)
+            rms=np.sqrt(np.mean(np.sum((projected-pixels)**2,axis=1)))
+            candidates.append((rms,tv.flatten()))
+        if not candidates:return None
+        rms,translation=min(candidates,key=lambda v:v[0])
+        if rms>=2:return None
+        R=rotation([float(row[k]) for k in ('nav_qw','nav_qx','nav_qy','nav_qz')])
+        origin=np.array([float(row[k]) for k in ('nav_x','nav_y','nav_z')])+R@np.array([0,0,-.035])
+        return origin+R@down@C.T@translation,rms
+    matches=True;estimates=[];hashes={}
+    for i,row in enumerate(rows):
+        file=out/'onboard_frames'/f'{i:06d}.jpg'
+        image=cv2.imread(str(file));assert image is not None
+        result=solve(image,row)
+        logged=bool(int(row['detected']))
+        matches &= (result is not None)==logged
+        if result is not None:
+            position,rms=result
+            live=np.array([float(row[k]) for k in ('estimate_x','estimate_y','estimate_z')])
+            delta=float(np.linalg.norm(position-live));matches &=delta<.0001
+            truth=np.array([float(row[k]) for k in ('boat_x','boat_y','boat_z')])
+            estimates.append(dict(index=i,t=float(row['gazebo_s']),error_m=float(np.linalg.norm(position-truth)),live_delta_m=delta,rms_px=rms))
+            hashes[file.name]=hashlib.sha256(file.read_bytes()).hexdigest()
+            if len(estimates)==1:
+                changed=dict(row);changed['nav_x']=str(float(row['nav_x'])+10)
+                shifted=solve(image,changed)[0]
+                checks['estimator_uses_navigation_not_truth']=np.linalg.norm((shifted-position)-[10,0,0])<1e-6
+                checks['blank_image_has_no_detection']=solve(np.full_like(image,127),row) is None
+                cv2.imwrite(str(out/'first_independent_detection.jpg'),image)
+    errors=np.array([e['error_m'] for e in estimates]);times=np.array([e['t'] for e in estimates])
+    phase_events=[e for e in events if e['event']=='mission_current']
+    detections_per_pass={3:0,6:0}
+    for estimate in estimates:
+        native_time=estimate['t']-manifest['epoch_offset_s']
+        phases=[e['seq'] for e in phase_events if e['sim_s']<=native_time]
+        phase=phases[-1] if phases else None
+        estimate['mission_seq']=phase
+        if phase in detections_per_pass:detections_per_pass[phase]+=1
+    checks.update({
+        'independent_pixel_estimates_match_live':bool(matches),
+        'at_least_5_airborne_detections':len(estimates)>=5,
+        'image_track_span_at_least_1s':bool(len(times) and np.ptp(times)>1),
+        'position_error_p95_below_3m':bool(len(errors) and np.percentile(errors,95)<3),
+        'boat_moves_during_mission':np.ptp([float(r['boat_x']) for r in rows])>1,
+    })
+    if not pilot:checks['detections_on_both_search_passes']=all(n>0 for n in detections_per_pass.values())
+    videos={}
+    for name in ('FixedWing_Full_Mission_Clean.mp4','Onboard_Camera_Clean.mp4'):
+        path=out/name
+        result=subprocess.run(['ffmpeg','-v','error','-i',str(path),'-f','null','-'],capture_output=True,text=True)
+        checks[name+'_decodes']=result.returncode==0
+        videos[name]=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration,size','-of','json',str(path)]))
+    checks={name:bool(value) for name,value in checks.items()}
+    report=dict(passed=all(checks.values()),pilot=pilot,checks=checks,
+        camera_frames=len(rows),image_detections=len(estimates),image_track_span_s=float(np.ptp(times)) if len(times) else 0,
+        detections_per_search_pass=detections_per_pass,
+        position_error_m=dict(median=float(np.median(errors)),p95=float(np.percentile(errors,95)),maximum=float(errors.max())) if len(errors) else None,
+        touchdown=dict(t=touchdown['timestamp'],east=touchdown['position'][1],north=touchdown['position'][0],sink_mps=before['velocity'][2]) if touchdown else None,
+        final_position_ned_m=last['position'],maximum_altitude_m=float(alt.max()),
+        videos=videos,detection_frame_sha256=hashes,estimates=estimates,
+        limitations='Native ArduPlane aerodynamic/flat-ground FDM drives Gazebo airframe and calibrated camera; Gazebo simulates boat/waves. No aircraft-water/terrain collision coupling, real-vessel/airframe calibration, camera blur/noise or actual flight validation. Image tracking is an intermittent two-pass survey, not persistent lock under occlusion.')
+    (out/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps({k:v for k,v in report.items() if k not in ('estimates','detection_frame_sha256')},indent=2))
+    if not report['passed']:raise SystemExit(1)
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--pilot',action='store_true')
+    args=p.parse_args();validate(args.out,args.pilot)

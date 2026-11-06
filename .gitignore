@@ -1,0 +1,29 @@
+# Local runtime, builds, captures and secrets
+/build/
+/install/
+/log/
+**/build/
+**/install/
+**/log/
+*.so
+/results/
+/delivery/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+*.key
+*.pem
+eeprom.bin
+*.mp4
+*.zip
+*.stl
+/references/ardurover/
+/references/*_plot.js
+/references/*.pdf
+/references/*.png
+/h-spar-sim/ros2_ws/src/blueboat_description/models/*/meshes/water.dae
+# Local supervisor/reporting notes are outside the public source release.
+/docs/ISSUES_AIRSEA_CN.md

@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.6">
+  <model name="ocean_surface">
+    <static>true</static>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://blueboat_ocean_visual/meshes/water.dae</uri>
+          </mesh>
+        </geometry>
+        <plugin filename="gz-sim-shader-param-system" name="gz::sim::systems::ShaderParam">
+          <shader language="glsl">
+            <vertex>model://blueboat_ocean_visual/materials/programs/Ocean_vs.glsl</vertex>
+            <fragment>model://blueboat_ocean_visual/materials/programs/Ocean_fs.glsl</fragment>
+          </shader>
+          <param>
+            <shader>vertex</shader>
+            <name>Nwaves</name>
+            <type>int</type>
+            <value>3</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>rescale</name>
+            <type>float</type>
+            <value>1.0</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>bumpScale</name>
+            <type>float_array</type>
+            <value>0.55 0.55</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>bumpSpeed</name>
+            <type>float_array</type>
+            <value>0.022 -0.014</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>amplitude</name>
+            <type>float_array</type>
+            <value>0.06 0.025 0.015</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>wavenumber</name>
+            <type>float_array</type>
+            <value>1.0471975511965976 1.7951958020513104 0.7853981633974483</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>omega</name>
+            <type>float_array</type>
+            <value>3.204606039038514 4.195814213259029 2.7752702389283797</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>dir0</name>
+            <type>float_array</type>
+            <value>0.9396926207859084 0.3420201433256687</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>dir1</name>
+            <type>float_array</type>
+            <value>0.17364817766693041 0.984807753012208</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>dir2</name>
+            <type>float_array</type>
+            <value>0.8660254037844387 -0.49999999999999994</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>steepness</name>
+            <type>float_array</type>
+            <value>0 0 0</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>tau</name>
+            <type>float</type>
+            <value>3.0</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>camera_position_object_space</name>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>worldviewproj_matrix</name>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>t</name>
+            <value>TIME</value>
+          </param>
+          <param>
+            <shader>fragment</shader>
+            <name>shallowColor</name>
+            <type>float_array</type>
+            <value>0.055 0.14 0.16 1</value>
+          </param>
+          <param>
+            <shader>fragment</shader>
+            <name>deepColor</name>
+            <type>float_array</type>
+            <value>0.018 0.065 0.085 1</value>
+          </param>
+          <param>
+            <shader>fragment</shader>
+            <name>bumpMap</name>
+            <type>texture</type>
+            <value>model://blueboat_water_visual/materials/textures/wave_normals.dds</value>
+          </param>
+          <param>
+            <shader>vertex</shader>
+            <name>phase</name>
+            <type>float_array</type>
+            <value>0 1.2 2.1</value>
+          </param>
+        </plugin>
+      </visual>
+    </link>
+    <pose>0 0 0 0 0 0</pose>
+  </model>
+</sdf>

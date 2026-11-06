@@ -1,0 +1,29 @@
+{
+  "transform": [
+    [
+      0,
+      0,
+      0.001,
+      -0.602533
+    ],
+    [
+      -0.001,
+      0,
+      0,
+      0.593232
+    ],
+    [
+      0,
+      0.001,
+      0,
+      -0.24
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "meaning": "CAD mm: Z forward, -X port, Y up; centered in length/beam, deck approximately z=0.15 m. CAD flag included. Chosen vertical origin is a modeling frame, not measured COM."
+}

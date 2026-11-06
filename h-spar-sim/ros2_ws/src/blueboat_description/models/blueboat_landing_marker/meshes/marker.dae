@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <up_axis>Z_UP</up_axis>
+    <unit name="meter" meter="1" />
+  </asset>
+  <library_images>
+    <image id="tag-image">
+      <init_from>../materials/textures/tag36h11_0.png</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="tag-effect">
+      <profile_COMMON>
+        <newparam sid="tag-surface">
+          <surface type="2D">
+            <init_from>tag-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="tag-sampler">
+          <sampler2D>
+            <source>tag-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="tag-sampler" texcoord="UVMap" />
+            </diffuse>
+            <ambient>
+              <color>1 1 1 1</color>
+            </ambient>
+            <specular>
+              <color>0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="tag-material">
+      <instance_effect url="#tag-effect" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="marker">
+      <mesh>
+        <source id="positions">
+          <float_array id="positions-array" count="12">-0.27 -0.27 0 0.27 -0.27 0 0.27 0.27 0 -0.27 0.27 0</float_array>
+          <technique_common>
+            <accessor source="#positions-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="uv">
+          <float_array id="uv-array" count="8">0 0 1 0 1 1 0 1</float_array>
+          <technique_common>
+            <accessor source="#uv-array" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="normals">
+          <float_array id="normals-array" count="12">0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#normals-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="vertices">
+          <input semantic="POSITION" source="#positions" />
+        </vertices>
+        <triangles count="2" material="tag-material">
+          <input semantic="VERTEX" source="#vertices" offset="0" />
+          <input semantic="TEXCOORD" source="#uv" offset="1" set="0" />
+          <input semantic="NORMAL" source="#normals" offset="2" />
+          <p>0 0 0 1 1 1 2 2 2 0 0 0 2 2 2 3 3 3</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene">
+      <node id="marker_surface">
+        <instance_geometry url="#marker">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tag-material" target="#tag-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0" />
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

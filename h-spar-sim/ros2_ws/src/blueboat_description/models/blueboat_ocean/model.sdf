@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <model name="blueboat_ocean">
+    <self_collide>false</self_collide>
+    <link name="base_link">
+      <inertial>
+        <pose>0.0 0.0 0.02 0 0 0</pose>
+        <mass>16.9</mass>
+        <inertia>
+          <ixx>2.374</ixx>
+          <iyy>1.551</iyy>
+          <izz>3.803</izz>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyz>0.0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="port_hull">
+        <pose>0 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.2 0.19 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.05 0.3 0.7 1</ambient>
+          <diffuse>0.05 0.3 0.7 1</diffuse>
+        </material>
+      </visual>
+      <visual name="starboard_hull">
+        <pose>0 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.2 0.19 0.22</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.05 0.3 0.7 1</ambient>
+          <diffuse>0.05 0.3 0.7 1</diffuse>
+        </material>
+      </visual>
+      <visual name="crossbar_-0.3">
+        <pose>-0.3 0 0.12 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.025 0.93 0.025</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.15 0.15 0.15 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+        </material>
+      </visual>
+      <visual name="crossbar_0.3">
+        <pose>0.3 0 0.12 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.025 0.93 0.025</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.15 0.15 0.15 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+        </material>
+      </visual>
+      <visual name="proposed_landing_panel">
+        <pose>0 0 0.154445061 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.64 0.56 0.006</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>.85 .85 .83 1</ambient>
+          <diffuse>.85 .85 .83 1</diffuse>
+        </material>
+        <cast_shadows>false</cast_shadows>
+      </visual>
+      <visual name="landing_apriltag_0">
+        <pose>0 0 0.1576 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://blueboat_landing_marker/meshes/marker.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0 0 0 1</specular>
+          <pbr>
+            <metal>
+              <albedo_map>model://blueboat_landing_marker/materials/textures/tag36h11_0.png</albedo_map>
+              <metalness>0</metalness>
+              <roughness>1</roughness>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+      <collision name="port_0">
+        <pose>-0.4354166666666667 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_1">
+        <pose>-0.35625 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_2">
+        <pose>-0.27708333333333335 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_3">
+        <pose>-0.19791666666666669 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_4">
+        <pose>-0.11875000000000002 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_5">
+        <pose>-0.03958333333333336 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_6">
+        <pose>0.039583333333333304 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_7">
+        <pose>0.11875000000000002 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_8">
+        <pose>0.19791666666666663 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_9">
+        <pose>0.27708333333333335 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_10">
+        <pose>0.35624999999999996 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="port_11">
+        <pose>0.43541666666666656 0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_0">
+        <pose>-0.4354166666666667 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_1">
+        <pose>-0.35625 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_2">
+        <pose>-0.27708333333333335 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_3">
+        <pose>-0.19791666666666669 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_4">
+        <pose>-0.11875000000000002 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_5">
+        <pose>-0.03958333333333336 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_6">
+        <pose>0.039583333333333304 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_7">
+        <pose>0.11875000000000002 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_8">
+        <pose>0.19791666666666663 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_9">
+        <pose>0.27708333333333335 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_10">
+        <pose>0.35624999999999996 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="starboard_11">
+        <pose>0.43541666666666656 -0.37 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.07916666666666666 0.09 0.22</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+    <plugin filename="blueboat-thrusters-system" name="blueboat::Thrusters">
+      <link_name>base_link</link_name>
+      <max_thrust>40.20726499999999</max_thrust>
+      <reverse_ratio>0.6853658536585366</reverse_ratio>
+      <command_timeout>0.5</command_timeout>
+      <center_of_mass>0.0 0.0 0.02</center_of_mass>
+      <left_position>-0.5075 0.2944 -0.1355</left_position>
+      <left_topic>/wamv/thrusters/left/thrust</left_topic>
+      <right_position>-0.5075 -0.2944 -0.1355</right_position>
+      <right_topic>/wamv/thrusters/right/thrust</right_topic>
+    </plugin>
+    <plugin filename="gz-sim-hydrodynamics-system" name="gz::sim::systems::Hydrodynamics">
+      <link_name>base_link</link_name>
+      <disable_added_mass>true</disable_added_mass>
+      <xU>-3.0</xU>
+      <yV>-18.0</yV>
+      <zW>-45.0</zW>
+      <kP>-6.0</kP>
+      <mQ>-6.0</mQ>
+      <nR>-2.0</nR>
+      <xUabsU>-7.934947777777777</xUabsU>
+      <yVabsV>-30.0</yVabsV>
+      <zWabsW>-30.0</zWabsW>
+      <kPabsP>-2.0</kPabsP>
+      <mQabsQ>-2.0</mQabsQ>
+      <nRabsR>-1.0</nRabsR>
+      <namespace>blueboat</namespace>
+      <default_current>0.25 0.1 0.0</default_current>
+    </plugin>
+    <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+      <odom_frame>map</odom_frame>
+      <robot_base_frame>wamv_simple</robot_base_frame>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <dimensions>3</dimensions>
+      <odom_topic>/blueboat/odometry</odom_topic>
+    </plugin>
+    <plugin filename="blueboat-environment-system" name="blueboat::Environment">
+      <waves>
+        <ramp_seconds>3.0</ramp_seconds>
+        <wave>
+          <amplitude>0.06</amplitude>
+          <wavelength>6.0</wavelength>
+          <direction_deg>20</direction_deg>
+          <phase>0</phase>
+        </wave>
+        <wave>
+          <amplitude>0.025</amplitude>
+          <wavelength>3.5</wavelength>
+          <direction_deg>80</direction_deg>
+          <phase>1.2</phase>
+        </wave>
+        <wave>
+          <amplitude>0.015</amplitude>
+          <wavelength>8.0</wavelength>
+          <direction_deg>-30</direction_deg>
+          <phase>2.1</phase>
+        </wave>
+      </waves>
+      <current>0.25 0.1 0.0</current>
+      <wind>4.0 2.0 0.0</wind>
+      <drag_area_cd>0.08 0.14 0.02</drag_area_cd>
+      <wind_center>0.0 0.0 0.18</wind_center>
+      <center_of_mass>0.0 0.0 0.02</center_of_mass>
+      <gust_fraction>0.25</gust_fraction>
+      <gust_period>8.0</gust_period>
+    </plugin>
+  </model>
+</sdf>

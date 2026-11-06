@@ -1,0 +1,32 @@
+{
+  "status": "completed",
+  "error": null,
+  "sea_state": 1,
+  "epoch_offset_s": 1.153166,
+  "normal_plane_arming": true,
+  "rover_armed": true,
+  "image_observations": 16,
+  "image_based_second_pass_replanned": true,
+  "aircraft_physics": "ArduPlane 4.6.3 native plane aerodynamic and ground-contact FDM; read-only JSON slave -> Gazebo rendering",
+  "boat_physics": "Gazebo 6DOF buoyancy, 32 JONSWAP waves, wind/current and ArduRover 4.7.2",
+  "estimator": "Native rendered pixels -> AprilTag ID0 -> IPPE PnP -> MAVLink EKF ownship navigation + calibrated mount -> ENU boat position; truth evaluation only",
+  "pilot": false,
+  "playback_rate_changes": [
+    {
+      "native_s": 82.994078,
+      "real_time_factor": 0.05
+    },
+    {
+      "native_s": 90.879078,
+      "real_time_factor": 0.8
+    },
+    {
+      "native_s": 141.701578,
+      "real_time_factor": 0.05
+    },
+    {
+      "native_s": 148.446578,
+      "real_time_factor": 0.8
+    }
+  ]
+}

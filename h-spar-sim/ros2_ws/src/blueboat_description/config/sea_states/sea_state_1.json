@@ -1,0 +1,219 @@
+{
+  "sea_state": 1,
+  "target_hm0_m": 0.05,
+  "target_tp_s": 2.0,
+  "classification_range_m": [
+    0,
+    0.1
+  ],
+  "spectrum": "Truncated 32-component JONSWAP, gamma=3.3, f/fp=0.5..2.5; amplitudes normalized to Hm0=4*sqrt(sum(a^2)/2)",
+  "random_seed": 20261101,
+  "waves": [
+    {
+      "amplitude_m": 1.799503360190615e-05,
+      "wavelength_m": 21.884508770120817,
+      "direction_deg": -6.148479448426116,
+      "phase_rad": 0.48193388000153115
+    },
+    {
+      "amplitude_m": 0.0001710694477240912,
+      "wavelength_m": 17.97664886425065,
+      "direction_deg": 0.8384669736762973,
+      "phase_rad": 3.5017192585495924
+    },
+    {
+      "amplitude_m": 0.0007938408559917411,
+      "wavelength_m": 14.518681241914056,
+      "direction_deg": 23.72766906691229,
+      "phase_rad": 0.32469692957724455
+    },
+    {
+      "amplitude_m": 0.0020426003088870152,
+      "wavelength_m": 11.589418718994363,
+      "direction_deg": 21.656505005060662,
+      "phase_rad": 2.857551520058665
+    },
+    {
+      "amplitude_m": 0.0026424303829266646,
+      "wavelength_m": 10.53325115224702,
+      "direction_deg": 12.476963311833092,
+      "phase_rad": 2.283145069330763
+    },
+    {
+      "amplitude_m": 0.003547729142633034,
+      "wavelength_m": 9.10279574149892,
+      "direction_deg": 31.465680512777283,
+      "phase_rad": 6.026306658373389
+    },
+    {
+      "amplitude_m": 0.005263067114554042,
+      "wavelength_m": 7.592009176002203,
+      "direction_deg": 15.039184361900059,
+      "phase_rad": 1.2672334214179382
+    },
+    {
+      "amplitude_m": 0.00719939833007778,
+      "wavelength_m": 6.7541670947986585,
+      "direction_deg": 16.935835689560914,
+      "phase_rad": 5.90080655511359
+    },
+    {
+      "amplitude_m": 0.007627788656110486,
+      "wavelength_m": 5.89452248125122,
+      "direction_deg": 18.367200606588252,
+      "phase_rad": 4.130625095103986
+    },
+    {
+      "amplitude_m": 0.005991024464920999,
+      "wavelength_m": 5.23850609423079,
+      "direction_deg": 20.665915134045456,
+      "phase_rad": 2.6745296826691716
+    },
+    {
+      "amplitude_m": 0.004674935386842453,
+      "wavelength_m": 4.733569809534608,
+      "direction_deg": 13.984548231704693,
+      "phase_rad": 3.1020243863150885
+    },
+    {
+      "amplitude_m": 0.0038966740062121416,
+      "wavelength_m": 4.246363328920352,
+      "direction_deg": 31.81326499554372,
+      "phase_rad": 5.212964706440971
+    },
+    {
+      "amplitude_m": 0.0035089721736045773,
+      "wavelength_m": 3.837383926430514,
+      "direction_deg": 11.709131820530164,
+      "phase_rad": 4.785878146301412
+    },
+    {
+      "amplitude_m": 0.0031866992030296385,
+      "wavelength_m": 3.436476897500355,
+      "direction_deg": 19.37576143727365,
+      "phase_rad": 3.356069166455282
+    },
+    {
+      "amplitude_m": 0.0029028532788172652,
+      "wavelength_m": 3.1018940203363243,
+      "direction_deg": 11.639578306252503,
+      "phase_rad": 3.615808220678085
+    },
+    {
+      "amplitude_m": 0.00270334686719757,
+      "wavelength_m": 2.8808827344882455,
+      "direction_deg": 32.35444611729874,
+      "phase_rad": 1.7383545490242924
+    },
+    {
+      "amplitude_m": 0.002465685152850186,
+      "wavelength_m": 2.629234448107975,
+      "direction_deg": 16.142747831631784,
+      "phase_rad": 6.06683320210093
+    },
+    {
+      "amplitude_m": 0.0023358961807931978,
+      "wavelength_m": 2.495952777439132,
+      "direction_deg": 8.116600545904971,
+      "phase_rad": 0.6891612840877314
+    },
+    {
+      "amplitude_m": 0.0021023968853842996,
+      "wavelength_m": 2.2617070651027777,
+      "direction_deg": -4.472101602863479,
+      "phase_rad": 4.924195866697612
+    },
+    {
+      "amplitude_m": 0.0019285880284920646,
+      "wavelength_m": 2.0907965463357234,
+      "direction_deg": 25.317891337867053,
+      "phase_rad": 3.4625025126257656
+    },
+    {
+      "amplitude_m": 0.0017938801712849353,
+      "wavelength_m": 1.9597349563856392,
+      "direction_deg": 27.16912553052816,
+      "phase_rad": 0.38953620589608795
+    },
+    {
+      "amplitude_m": 0.0016523452391218976,
+      "wavelength_m": 1.8228849706634518,
+      "direction_deg": 24.37351621106898,
+      "phase_rad": 6.199446148367304
+    },
+    {
+      "amplitude_m": 0.0015432709830285895,
+      "wavelength_m": 1.7177438247799974,
+      "direction_deg": 20.250963364788415,
+      "phase_rad": 2.3322222921199667
+    },
+    {
+      "amplitude_m": 0.001449025833120699,
+      "wavelength_m": 1.6269478937325097,
+      "direction_deg": 14.588122182438088,
+      "phase_rad": 3.9845760865550894
+    },
+    {
+      "amplitude_m": 0.0013199098646356616,
+      "wavelength_m": 1.5023675788078088,
+      "direction_deg": 35.0146105929752,
+      "phase_rad": 3.7131693790906146
+    },
+    {
+      "amplitude_m": 0.001240965378161039,
+      "wavelength_m": 1.4259413796612566,
+      "direction_deg": 41.31307292469485,
+      "phase_rad": 2.9438783199241985
+    },
+    {
+      "amplitude_m": 0.0011425075044411731,
+      "wavelength_m": 1.3301811393914182,
+      "direction_deg": 40.92762356608148,
+      "phase_rad": 2.928585565464296
+    },
+    {
+      "amplitude_m": 0.0010832439251654588,
+      "wavelength_m": 1.2722260227956317,
+      "direction_deg": 32.406707264844215,
+      "phase_rad": 6.0175838714770205
+    },
+    {
+      "amplitude_m": 0.0009977392255020882,
+      "wavelength_m": 1.1880738377895124,
+      "direction_deg": 13.049942099900521,
+      "phase_rad": 6.170726069806532
+    },
+    {
+      "amplitude_m": 0.0009515862556553508,
+      "wavelength_m": 1.1423377206638892,
+      "direction_deg": 19.568063763965068,
+      "phase_rad": 4.667943913206317
+    },
+    {
+      "amplitude_m": 0.0008859407324054738,
+      "wavelength_m": 1.0768368261265817,
+      "direction_deg": 17.55326941753361,
+      "phase_rad": 4.311298458529753
+    },
+    {
+      "amplitude_m": 0.0008359654633000986,
+      "wavelength_m": 1.0265680722847792,
+      "direction_deg": 19.76065095830329,
+      "phase_rad": 2.2624626675251713
+    }
+  ],
+  "wave_ramp_seconds": 10,
+  "wind_enu_mps": [
+    2.0,
+    0.0,
+    0.0
+  ],
+  "gust_fraction": 0.1,
+  "gust_period_s": 8,
+  "current_enu_mps": [
+    0.1,
+    0.03,
+    0.0
+  ],
+  "notes": "Sea-state codes constrain wave-height range, not a unique period, spectrum, wind or current. These are selected representative cases, not all of either sea state. Deep-water linear approximation; no breaking/slamming/radiation/diffraction or real-boat calibration."
+}
