@@ -1,0 +1,22 @@
+{
+  "name": "PX4 Believer twin-motor V-tail fixed-wing visual",
+  "source_repository": "https://github.com/PX4/PX4-SITL_gazebo-classic",
+  "source_commit": "ab7dbc572b4519238f8263ef4a288e6eb80a6076",
+  "license": "Apache-2.0",
+  "uniform_scale": 0.8234671673347044,
+  "length_m": 0.9606749136903475,
+  "wingspan_m": 1.6,
+  "visual_offset_z_m": 0.09,
+  "body_mesh_min_z_m": -0.008496554819238666,
+  "camera_mount_z_m": -0.035,
+  "wheel_bottom_z_m": -0.1,
+  "mesh_sha256": {
+    "believer_aileron_left.dae": "bb4c780913f6176363b40d254b0ad90c7a87637498a3b6217e5c24decb05c5f0",
+    "believer_aileron_right.dae": "3a7291f53ecf51cba6419c7bc1aa2ce616407825e9c3ac1728e1e8c71cf4b6ba",
+    "believer_body.dae": "2dd81e17fa8fbd21c7ff5fa21e90187c1a8af8df1a23214b49bd893b023e2013",
+    "believer_taileron_left.dae": "ae2134fba0e8cb04528ff1afecb0abc821e7daea3606c32741528eb256799e96",
+    "believer_taileron_right.dae": "6d3d361aafa23ee73288acd18d6cb6d00ad4be6f48ef331bc73e3c0eb61389cd",
+    "propeller_cw.dae": "d7701eb3b2ea50fd3bb7849dc84f6d5f1574cee4e02a216c88a1d4d6b442a295"
+  },
+  "modifications": "Explicit identity visual scenes; Z-up metadata; smoothed normals with 50-degree crease threshold; complete white/blue material bindings; uniform scale; original tricycle gear and camera pod. Generic ArduPlane FDM retained; this is not a calibrated Believer aerodynamic model."
+}

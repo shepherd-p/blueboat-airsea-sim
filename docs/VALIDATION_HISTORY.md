@@ -1,6 +1,34 @@
 # Validation provenance
 
-## Final coupled fixed-wing mission, 2026-11-07
+## Believer visual replacement, 2026-11-07
+
+A fresh full run (`airsea_believer_01`) with the Apache-2.0 PX4 Believer
+twin-motor V-tail appearance passed all 25 independent acceptance checks.
+It used the same native ArduPlane FDM and Sea State 1 boat environment as
+the earlier mission below. Normal arming, runway takeoff, both rendered-image
+survey passes, image-based second-pass waypoint update, landing on the
+runway, stop and automatic disarming all passed without pilot intervention.
+
+- Archived camera frames: 767; successful image localizations: 12
+  (8 on phase 3 and 4 on phase 6).
+- Position error: median 0.739 m, P95 1.182 m, maximum 1.255 m.
+- Touchdown ENU: east 90.693 m, north 0.568 m;
+  descent speed 0.342 m/s.
+- Both full videos decoded successfully; each is
+  255.040 seconds.
+
+The checker independently re-detected the archived JPEGs and verified the
+navigation-dependent PnP estimates. The new mesh provenance and generated
+mesh hashes are in evidence/aircraft_visual.json. The replacement includes
+new landing gear, white/blue materials, smoothed surface normals,
+throttle-driven propeller animation/blur and a closer chase view. Generic
+flight dynamics, intermittent image survey and ideal-camera limitations
+remain; these results do not calibrate a real Believer or its motor RPM.
+
+The current docs/evidence and Believer release use this run. Earlier source,
+videos and data below remain separately available in the original release.
+
+## Earlier procedural-aircraft mission, 2026-11-07
 
 The public procedural-asset version completed a full Sea State 1 mission
 (`airsea_full_02`) with ArduPlane 4.6.3 native FDM, Gazebo boat dynamics
@@ -26,7 +54,7 @@ fighting. The shore surface was lowered by 4 cm without moving the runway
 or native aircraft ground. The final full run above uses the corrected
 scene and adds an explicit check for detections on both search passes.
 Both runs and their distinct results remain in the local results folder;
-the release evidence and videos are from `airsea_full_02`.
+the original `airsea-2026-11-07` release uses `airsea_full_02`.
 
 The checker independently re-detected the saved JPEGs and re-solved PnP;
 all live estimates matched within 0.1 mm numerical tolerance. A blank

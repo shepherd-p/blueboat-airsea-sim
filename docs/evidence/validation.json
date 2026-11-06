@@ -28,41 +28,41 @@
     "FixedWing_Full_Mission_Clean.mp4_decodes": true,
     "Onboard_Camera_Clean.mp4_decodes": true
   },
-  "camera_frames": 773,
-  "image_detections": 16,
-  "image_track_span_s": 58.208,
+  "camera_frames": 767,
+  "image_detections": 12,
+  "image_track_span_s": 58.195999999999984,
   "detections_per_search_pass": {
-    "3": 9,
-    "6": 7
+    "3": 8,
+    "6": 4
   },
   "position_error_m": {
-    "median": 0.7712493946101608,
-    "p95": 1.263224675341794,
-    "maximum": 1.3028069036636665
+    "median": 0.7386569788140263,
+    "p95": 1.181625234166938,
+    "maximum": 1.255319696020899
   },
   "touchdown": {
-    "t": 272.806578,
-    "east": 91.152451,
-    "north": 0.59269,
-    "sink_mps": 0.355118
+    "t": 272.466578,
+    "east": 90.692608,
+    "north": 0.568163,
+    "sink_mps": 0.341702
   },
   "final_position_ned_m": [
-    0.298248,
-    112.247955,
+    0.295252,
+    111.667735,
     -0.1
   ],
-  "maximum_altitude_m": 45.87524,
+  "maximum_altitude_m": 45.922449,
   "videos": {
     "FixedWing_Full_Mission_Clean.mp4": {
       "format": {
-        "duration": "255.800000",
-        "size": "213503505"
+        "duration": "255.040000",
+        "size": "212589643"
       }
     },
     "Onboard_Camera_Clean.mp4": {
       "format": {
-        "duration": "255.800000",
-        "size": "84886537"
+        "duration": "255.040000",
+        "size": "84142439"
       }
     }
   },

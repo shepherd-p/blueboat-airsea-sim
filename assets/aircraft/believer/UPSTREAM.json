@@ -1,0 +1,40 @@
+{
+  "repo": "PX4/PX4-SITL_gazebo-classic",
+  "commit": "ab7dbc572b4519238f8263ef4a288e6eb80a6076",
+  "model": "believer",
+  "license_declaration": "models/believer/model.config: Apache 2.0",
+  "files": {
+    "model.config": {
+      "sha256": "c99b90819549f69d3f0f9c5579431f1d48ff17bd2b82d9d808a28485c3faeeaa",
+      "bytes": 424
+    },
+    "believer.sdf": {
+      "sha256": "8cc6f16f010f24ce0622937bcf1b6c7ed535b1842e77474331422021e4b7cdb4",
+      "bytes": 20855
+    },
+    "meshes/believer_body.dae": {
+      "sha256": "a507353a06be828daf447e4ffdd0b422ef16aa7b45b911e79bd3e4a6bcd1c46d",
+      "bytes": 1422491
+    },
+    "meshes/believer_aileron_left.dae": {
+      "sha256": "b1d6c4f8d1434fc2dfbdf765e04f18a309ef0ca63f65bdd9955f64ca3498c07d",
+      "bytes": 80229
+    },
+    "meshes/believer_aileron_right.dae": {
+      "sha256": "295514e3a113202a0e1b7c1c5c1612e6ff7443d5df2fb3714f57ea7d4d78bf1a",
+      "bytes": 79656
+    },
+    "meshes/believer_taileron_left.dae": {
+      "sha256": "6825f08bd692b59b4f0c96b00567ad8576d8473053504f06a9bcaf0ca439af37",
+      "bytes": 55770
+    },
+    "meshes/believer_taileron_right.dae": {
+      "sha256": "cc3c213ff235827f0ad44bf9dff23a1f2c534f5530d9ba36a719aae5cf4362ec",
+      "bytes": 55107
+    },
+    "meshes/propeller_cw.dae": {
+      "sha256": "6cbc686772dccd46253fb65ece000e7ffa6a74b9c097bda349884bd1e78cd879",
+      "bytes": 354209
+    }
+  }
+}

@@ -1,7 +1,8 @@
 # Fixed-wing coastal search and runway recovery
 
-This extends the public BlueBoat project with an original 1.3 m long,
-1.6 m span fixed-wing visual model, a 600 x 18 m coastal runway, real
+This extends the public BlueBoat project with the Apache-2.0 PX4 Believer
+twin-motor V-tail visual, uniformly scaled to 0.961 m length and 1.6 m
+span, a 600 x 18 m coastal runway, real
 ArduPlane AUTO missions and a calibrated downward airborne camera.
 The environment is the existing reproducible **Sea State 1** case
 (Hm0=0.05 m, Tp=2 s, 32 JONSWAP components, 2 m/s wind, current).
@@ -64,6 +65,17 @@ The standard ideal SITL accelerometer calibration is explicit in the
 parameter file, following upstream's native plane test configuration.
 It represents simulator calibration, not a calibration of real hardware.
 Airframe mass and wing area follow native plane FDM (2 kg, 0.45 m2).
+The Believer replacement changes appearance only: the FDM is generic,
+not calibrated to a physical Believer. Propeller rotation and blur follow
+autopilot throttle and illustrate powered flight; they do not report
+calibrated shaft RPM. The white/blue mesh materials, original tricycle
+gear and camera pod are described in assets/aircraft/believer/NOTICE.md.
+
+To inspect the model from five actual Gazebo camera views:
+
+```bash
+bash tools/preview_aircraft_wsl.sh --out "$PWD/results/aircraft_preview_01"
+```
 
 Each run saves native FDM JSONL, MAVLink telemetry and events, exact
 world/config/wave profile, per-frame JPEG sensor images, live image
@@ -98,5 +110,7 @@ ArduPlane binary: official stable-4.6.3, commit
 SHA-256 checked by the installer; it is not distributed in this project.
 ArduPilot source/license: https://github.com/ArduPilot/ardupilot
 (GPL-3.0-or-later). Parameter calibration/control conventions were checked
-against `Tools/autotest/models/plane.parm` at that commit. New aircraft,
-runway, integration and camera code here is original MIT-licensed code.
+against `Tools/autotest/models/plane.parm` at that commit. New runway,
+integration, landing gear and camera code here is original MIT-licensed
+code. Aircraft meshes retain their Apache-2.0 license and upstream author
+attribution; see THIRD_PARTY_NOTICES.md and assets/aircraft/believer/.

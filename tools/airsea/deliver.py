@@ -23,6 +23,7 @@ def ffmpeg(args):subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y
 
 def make_highlights(out,destination):
     """Chronological chase/onboard excerpts, with both actual boat sightings."""
+    out=out.resolve();destination=destination.resolve()
     report=json.loads((out/'validation.json').read_text())
     rows=list(csv.DictReader((out/'airborne_observations.csv').open()))
     states=[json.loads(line) for line in (out/'native_fdm.jsonl').read_text().splitlines()]
@@ -52,6 +53,7 @@ def make_highlights(out,destination):
 
 
 def deliver(out,destination):
+    out=out.resolve();destination=destination.resolve()
     report=json.loads((out/'validation.json').read_text())
     assert report['passed'] and not report['pilot'],'Only package a passing full run'
     destination.mkdir(parents=True,exist_ok=False)
@@ -79,6 +81,9 @@ def deliver(out,destination):
     ffmpeg(['-ss',str(max(0,detection_times[0]-2)),'-i',str(onboard),'-t',str(interval),'-an','-c:v','libx264','-preset','fast','-crf','18','-movflags','+faststart',str(videos/'03_Onboard_Boat_Search_Clean.mp4')])
     for name in ('validation.json','session_manifest.json','mission_config.json','airborne_camera_calibration.json','flight_events.json','flight_telemetry.csv','airborne_observations.csv','image_track.jsonl','native_fdm.jsonl','profile.json','input_hashes.json'):
         shutil.copy2(out/name,evidence/name)
+    if (out/'aircraft_visual.json').exists():
+        shutil.copy2(out/'aircraft_visual.json',evidence/'aircraft_visual.json')
+        shutil.copy2(out/'aircraft_visual.json',public/'aircraft_visual.json')
     # Back up the original image inputs and exact generated scene separately
     # from the source tree. The adjacent full videos retain the full recording.
     raw_files=[*sorted((out/'onboard_frames').glob('*.jpg'))]
@@ -89,6 +94,9 @@ def deliver(out,destination):
         'native_fdm.jsonl','profile.json','input_hashes.json','world.sdf',
         'water_near.dae','water_far.dae','wave_shader.glsl',
         'environment.csv','sitl_bridge.csv')]
+    if (out/'aircraft_visual.json').exists():
+        raw_files.append(out/'aircraft_visual.json')
+        raw_files.extend(sorted((out/'aircraft_meshes').glob('*.dae')))
     (evidence/'RECHECK.md').write_text('''# Recheck the archived run
 
 Extract Recorded_Run_Evidence.zip into a new empty run directory. Copy the

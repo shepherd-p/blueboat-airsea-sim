@@ -44,7 +44,17 @@ GPL-3.0-or-later executable, not distributed here. Official source commit:
 https://github.com/ArduPilot/ardupilot/tree/3fc7011a7d3dc047cbb17d8bd98ee94577d144c6.
 Native plane parameter/calibration conventions were checked against
 Tools/autotest/models/plane.parm. The independent JSON observer, Gazebo
-bridge, original procedural aircraft/runway and airborne camera/mission
+bridge, original runway and airborne camera/mission
 code are original MIT contributions. Runtime dependencies retain their
 own licenses. Small evidence images/reports in docs/evidence are original
 simulation outputs, distinct from the separately delivered videos.
+
+Aircraft appearance: the Believer meshes and model metadata are from
+PX4/PX4-SITL_gazebo-classic at
+`ab7dbc572b4519238f8263ef4a288e6eb80a6076`, under the model's declared
+Apache-2.0 license. Pavel Vechersky is named in the original model.config.
+Unchanged upstream files, license, attribution and byte hashes are in
+assets/aircraft/believer/. Runtime material/normal/scene adaptations and
+original landing gear are documented there. No upstream flight plugin is
+embedded. This appearance uses the existing generic ArduPlane FDM; it is
+not a calibrated physical Believer model.

@@ -1,4 +1,4 @@
-"""Original fixed-wing/runway assets in the existing physical Sea State 1 world."""
+"""PX4 Believer visual and coastal runway in the physical Sea State 1 world."""
 from pathlib import Path
 import argparse
 import copy
@@ -12,6 +12,7 @@ sys.path.insert(0,str(ROOT/'tools'))
 from generate_model import element, box, save
 from generate_environment import dense_water
 from sea_states import make_case
+from airframe import aircraft
 
 CONFIG=json.loads((ROOT/'config/airsea.json').read_text())
 
@@ -24,33 +25,6 @@ def solid(world,name,xyz,size,color):
     element(element(geometry,'box'),'size',' '.join(map(str,size)))
     material=element(visual,'material')
     element(material,'ambient',color);element(material,'diffuse',color)
-    return model
-
-
-def aircraft(world):
-    model=element(world,'model',name='aircraft');element(model,'static','true')
-    element(model,'pose','0 0 .1 0 0 0')
-    link=element(model,'link',name='base_link')
-    def part(name,size,xyz,color):
-        visual=element(link,'visual',name=name)
-        element(visual,'pose',' '.join(map(str,[*xyz,0,0,0])))
-        element(element(element(visual,'geometry'),'box'),'size',' '.join(map(str,size)))
-        material=element(visual,'material');element(material,'ambient',color);element(material,'diffuse',color)
-    part('fuselage',[1.3,.11,.11],[0,0,.025],'1 .32 .07 1')
-    part('main_wing',[.28,1.6,.024],[.05,0,.075],'.94 .96 .96 1')
-    part('port_wing_tip',[.28,.16,.028],[.05,.72,.077],'1 .3 .05 1')
-    part('starboard_wing_tip',[.28,.16,.028],[.05,-.72,.077],'1 .3 .05 1')
-    part('horizontal_tail',[.18,.55,.018],[-.49,0,.065],'.13 .28 .48 1')
-    part('vertical_tail',[.19,.024,.22],[-.49,0,.16],'.13 .28 .48 1')
-    part('gear_bar',[.035,.53,.025],[.18,0,-.03],'.12 .13 .14 1')
-    part('propeller',[.018,.50,.024],[.67,0,.025],'.08 .09 .10 1')
-    for i,(x,y) in enumerate(((.18,.24),(.18,-.24),(-.50,0))):
-        v=element(link,'visual',name=f'wheel_{i}')
-        element(v,'pose',f'{x} {y} -.058 1.5707963267948966 0 0')
-        cyl=element(element(v,'geometry'),'cylinder');element(cyl,'radius',.042);element(cyl,'length',.026)
-        mat=element(v,'material');element(mat,'ambient','.06 .065 .07 1');element(mat,'diffuse','.06 .065 .07 1')
-    p=element(model,'plugin',filename='AirSeaAircraft',name='airsea::Aircraft')
-    element(p,'pose_topic','/airsea/aircraft/truth_pose')
     return model
 
 
@@ -81,7 +55,7 @@ def prepare(out,rtf=.6):
     solid(world,'hangar_front',[42.02,-50,3],[.05,16,6],'.20 .24 .27 1')
     solid(world,'windsock_pole',[20,33,2],[.08,.08,4],'.82 .82 .78 1')
     for i in range(6):solid(world,f'windsock_{i}',[20+i*.15,33,4],[.15,.24,.24],'1 .22 .08 1' if i%2==0 else '.98 .97 .93 1')
-    aircraft(world)
+    aircraft(world,out,CONFIG['aircraft']['wingspan_m'])
     gui=world.find('gui')
     gui.find("plugin[@filename='MinimalScene']/camera_pose").text='-6 -8 3 0 .25 .9'
     p=element(gui,'plugin',filename='AirSeaCapture',name='Air Sea Native Camera')

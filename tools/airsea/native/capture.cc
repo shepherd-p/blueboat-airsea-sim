@@ -24,6 +24,7 @@
 #include <gz/rendering/Scene.hh>
 #include <gz/rendering/Camera.hh>
 #include <gz/rendering/Visual.hh>
+#include <gz/rendering/Material.hh>
 #include <gz/sim/gui/GuiSystem.hh>
 #include <gz/transport/Node.hh>
 #include <gz/msgs/boolean.pb.h>
@@ -54,7 +55,7 @@ class AirSeaCapture:public gz::sim::GuiSystem{
  gz::msgs::Pose truth,nav;bool haveTruth=false,haveNav=false;
  gz::rendering::CameraPtr onboard,chase;Provider *provider=nullptr;
  gz::common::VideoEncoder chaseVideo,onboardVideo;std::ofstream csv;
- bool active=false,opened=false,closed=false;int frameId=0,index=0;double last=-1e9,sim=0,rate=12,throttle=0;
+ bool active=false,opened=false,closed=false;int frameId=0,index=0;double last=-1e9,sim=0,rate=12,throttle=0,propPhase=0;
  std::string directory=".";double hfov=.8726646259971648,tagSize=.432;
  Mat K;
 public:
@@ -104,15 +105,23 @@ public:
   }
   // Same physical FDM pose drives both the rendered airframe and camera mount.
   plane->SetWorldPose(p);
-  auto prop=scene->VisualByName("aircraft::base_link::propeller");
-  if(!prop)prop=scene->VisualByName("aircraft/base_link/propeller");
-  if(prop)prop->SetLocalRotation(gz::math::Quaterniond(sim*throttle*15,0,0));
+  // Visual rotation and blur follow actual autopilot throttle. Shaft RPM is
+  // illustrative: native plane FDM has no calibrated Believer motor model.
+  if(index>0&&throttle>.01)propPhase=std::fmod(propPhase+(sim-last)*(20+180*throttle),2*Pi);
+  for(const std::string side:{"left","right"}){
+   auto prop=scene->VisualByName("aircraft::base_link::propeller_"+side);
+   if(!prop)prop=scene->VisualByName("aircraft/base_link/propeller_"+side);
+   if(prop)prop->SetLocalRotation(gz::math::Quaterniond(propPhase,0,0)*gz::math::Quaterniond(0,Pi/2,0));
+   auto blur=scene->VisualByName("aircraft::base_link::propeller_blur_"+side);
+   if(!blur)blur=scene->VisualByName("aircraft/base_link/propeller_blur_"+side);
+   if(blur&&blur->Material())blur->Material()->SetTransparency(throttle>.05?.86:1.0);
+  }
   const gz::math::Vector3d mount(0,0,-.035);
   const gz::math::Quaterniond down(0,Pi/2,0);
   onboard->SetWorldPosition(p.Pos()+p.Rot()*mount);onboard->SetWorldRotation(p.Rot()*down);
   // Chase uses heading only so airframe bank and pitch are visible against horizon.
   gz::math::Quaterniond heading(0,0,p.Rot().Yaw());
-  auto eye=p.Pos()+heading*gz::math::Vector3d(-7,-9,3.5);auto d=p.Pos()-eye;
+  auto eye=p.Pos()+heading*gz::math::Vector3d(-4.5,-5.5,2.3);auto d=p.Pos()-eye;
   chase->SetWorldPosition(eye);chase->SetWorldRotation({0,std::atan2(-d.Z(),std::hypot(d.X(),d.Y())),std::atan2(d.Y(),d.X())});
   onboard->Update();auto raw=onboard->CreateImage();onboard->Copy(raw);
   cv::Mat rgb(H,W,CV_8UC3,raw.Data<unsigned char>()),bgr;cv::cvtColor(rgb,bgr,cv::COLOR_RGB2BGR);

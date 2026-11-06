@@ -6,18 +6,25 @@ The aircraft uses real ArduPlane 4.6.3 native aerodynamic/ground-contact
 physics, coupled to the Gazebo scene and onboard camera. The boat uses
 Gazebo six-DOF dynamics and ArduRover 4.7.2.
 
+Aircraft appearance: the Apache-2.0 [PX4 Believer](assets/aircraft/believer/NOTICE.md),
+a twin-motor V-tail UAV with a white fuselage and blue control surfaces,
+scaled to 1.6 m span. The native ArduPlane FDM remains generic; this is
+not a calibrated aerodynamic model of a physical Believer.
+
+![Actual Gazebo view of the Believer aircraft](docs/evidence/aircraft_preview.png)
+
 **Start here:** [fixed-wing setup, mission, evidence and model limits](docs/AIRSEA_NEXT_PHASE.md).
 
-The final coupled run on 2026-11-07 passed all 25 independent checks:
+The fresh Believer run on 2026-11-07 passed all 25 independent checks:
 autonomous runway takeoff, two image survey passes, image-based second-pass
 waypoint update and autonomous landing/stop/disarm. Image position error P95
-was 1.263 m (16 detections across both passes); touchdown descent speed
-was 0.355 m/s.
+was 1.182 m (12 detections across both passes); touchdown descent speed
+was 0.342 m/s.
 See [validation provenance](docs/VALIDATION_HISTORY.md) and
 [machine-readable evidence](docs/evidence/validation.json).
 
 Clean videos, a source snapshot and the original image/flight evidence archive
-are distributed as [release attachments](https://github.com/shepherd-p/blueboat-airsea-sim/releases/tag/airsea-2026-11-07).
+are distributed as [release attachments](https://github.com/shepherd-p/blueboat-airsea-sim/releases/tag/airsea-believer-2026-11-07).
 
 ```bash
 # After the baseline build/install steps below:
