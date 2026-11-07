@@ -124,7 +124,12 @@ def validate(out,pilot=False):
         checks[name+'_decodes']=result.returncode==0
         videos[name]=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration,size','-of','json',str(path)]))
     checks={name:bool(value) for name,value in checks.items()}
-    report=dict(passed=all(checks.values()),pilot=pilot,checks=checks,
+    frame_times=np.array([float(r['gazebo_s']) for r in rows]);gaps=np.diff(frame_times)
+    capture_timing=dict(archived_sensor_frames=len(rows),elapsed_simulation_s=float(np.ptp(frame_times)),
+        effective_image_hz=float(len(gaps)/np.ptp(frame_times)),
+        median_gap_s=float(np.median(gaps)),p95_gap_s=float(np.percentile(gaps,95)),maximum_gap_s=float(gaps.max()),
+        note='Video container fps can contain repeated frames. Flight/vision acceptance does not establish presentation smoothness; use check_replay.py for frame-exact presentation exports.')
+    report=dict(passed=all(checks.values()),pilot=pilot,checks=checks,capture_timing=capture_timing,
         camera_frames=len(rows),image_detections=len(estimates),image_track_span_s=float(np.ptp(times)) if len(times) else 0,
         detections_per_search_pass=detections_per_pass,
         position_error_m=dict(median=float(np.median(errors)),p95=float(np.percentile(errors,95)),maximum=float(errors.max())) if len(errors) else None,

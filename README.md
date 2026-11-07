@@ -26,6 +26,11 @@ See [validation provenance](docs/VALIDATION_HISTORY.md) and
 Clean videos, a source snapshot and the original image/flight evidence archive
 are distributed as [release attachments](https://github.com/shepherd-p/blueboat-airsea-sim/releases/tag/airsea-believer-2026-11-07).
 
+For smooth 1080p/30 fps presentations, use the separately labeled
+[trajectory replay workflow](docs/RECORDING_30FPS.md). It renders each frame
+from the recorded aircraft and boat physical states. Original sensor/flight
+evidence remains separate; video container fps alone does not prove smoothness.
+
 ```bash
 # After the baseline build/install steps below:
 bash tools/setup_sitl_wsl.sh

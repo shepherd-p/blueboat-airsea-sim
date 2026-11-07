@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 LAB="$(cd "$(dirname "$0")/.." && pwd)"
+source "$LAB/tools/graphics_wsl.sh"
 source /opt/ros/jazzy/setup.bash
 source "$LAB/install/setup.bash"
 export ROS_DOMAIN_ID=94 GZ_PARTITION=blueboat_airsea
