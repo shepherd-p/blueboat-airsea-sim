@@ -225,14 +225,17 @@ class PlaneMission:
                 writer=csv.DictWriter(f,fieldnames=self.rows[0]);writer.writeheader();writer.writerows(self.rows)
 
 
-def native_trial(out,speedup=6):
+def native_trial(out,speedup=6,parameters=None):
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
     runtime=Path(os.environ.get('BLUEBOAT_PLANE_RUNTIME',str(Path.home()/'blueboat_plane_sitl')))
+    parameters=Path(parameters or ROOT/'config/arduplane.parm').resolve()
+    (out/'arduplane_used.parm').write_bytes(parameters.read_bytes())
+    (out/'mission_config.json').write_text(json.dumps(CONFIG,indent=2)+'\n')
     fdm=NativeFDM(out)
     log=(out/'arduplane.log').open('w')
     cmd=[str(runtime/'arduplane'),'--model','plane','--home',','.join(map(str,CONFIG['home'])),
          '--rate','400','--speedup',str(speedup),'--instance','12','--slave','1',
-         '--defaults',str(ROOT/'config/arduplane.parm'),'--serial0','tcp:5880','--serial1','none',
+         '--defaults',str(parameters),'--serial0','tcp:5880','--serial1','none',
          '--serial2','none','--wipe']
     p=subprocess.Popen(cmd,cwd=out,stdout=log,stderr=subprocess.STDOUT)
     mission=None
@@ -246,5 +249,5 @@ def native_trial(out,speedup=6):
 
 if __name__=='__main__':
     signal.signal(signal.SIGTERM,lambda *_: (_ for _ in ()).throw(KeyboardInterrupt()))
-    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);parser.add_argument('--speedup',type=float,default=6)
-    args=parser.parse_args();native_trial(args.out,args.speedup)
+    parser=argparse.ArgumentParser();parser.add_argument('--out',type=Path,required=True);parser.add_argument('--speedup',type=float,default=6);parser.add_argument('--parameters',type=Path)
+    args=parser.parse_args();native_trial(args.out,args.speedup,args.parameters)

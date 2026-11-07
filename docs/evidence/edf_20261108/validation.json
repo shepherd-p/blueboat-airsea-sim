@@ -1,0 +1,191 @@
+{
+  "passed": true,
+  "pilot": false,
+  "checks": {
+    "world_hash_matches": true,
+    "sea_state_1": true,
+    "normal_plane_arming": true,
+    "real_fdm_not_scripted_path": true,
+    "aircraft_comparable_size": true,
+    "runway_takeoff": true,
+    "rover_firmware_armed": true,
+    "archived_camera_frame_set": true,
+    "camera_follows_aircraft": true,
+    "all_mission_phases": true,
+    "autonomous_landing_and_disarm": true,
+    "touchdown_on_runway": true,
+    "touchdown_sink_below_2mps": true,
+    "stopped_on_runway": true,
+    "image_based_second_pass_replanned": true,
+    "estimator_uses_navigation_not_truth": true,
+    "blank_image_has_no_detection": true,
+    "independent_pixel_estimates_match_live": true,
+    "at_least_5_airborne_detections": true,
+    "image_track_span_at_least_1s": true,
+    "position_error_p95_below_3m": true,
+    "boat_moves_during_mission": true,
+    "detections_on_both_search_passes": true,
+    "FixedWing_Full_Mission_Clean.mp4_decodes": true,
+    "Onboard_Camera_Clean.mp4_decodes": true
+  },
+  "capture_timing": {
+    "archived_sensor_frames": 1617,
+    "elapsed_simulation_s": 256.036,
+    "effective_image_hz": 6.311612429502102,
+    "median_gap_s": 0.09199999999998454,
+    "p95_gap_s": 0.39450000000000074,
+    "maximum_gap_s": 7.022000000000006,
+    "note": "Video container fps can contain repeated frames. Flight/vision acceptance does not establish presentation smoothness; use check_replay.py for frame-exact presentation exports."
+  },
+  "camera_frames": 1617,
+  "image_detections": 12,
+  "image_track_span_s": 58.044,
+  "detections_per_search_pass": {
+    "3": 8,
+    "6": 4
+  },
+  "position_error_m": {
+    "median": 0.6647136534796774,
+    "p95": 0.9349226894438021,
+    "maximum": 0.9771679493537924
+  },
+  "touchdown": {
+    "t": 272.346578,
+    "east": 10.579932,
+    "north": 0.685512,
+    "sink_mps": 0.836944
+  },
+  "final_position_ned_m": [
+    0.641642,
+    36.488665,
+    -0.1
+  ],
+  "maximum_altitude_m": 51.682612,
+  "videos": {
+    "FixedWing_Full_Mission_Clean.mp4": {
+      "format": {
+        "duration": "256.000000",
+        "size": "221823122"
+      }
+    },
+    "Onboard_Camera_Clean.mp4": {
+      "format": {
+        "duration": "256.000000",
+        "size": "99007856"
+      }
+    }
+  },
+  "detection_frame_sha256": {
+    "000175.jpg": "37d33dac4671a29975f6673cad4ad9e7382cf9657227056c55739aed90bd9cd5",
+    "000176.jpg": "77bc7a9f3517ae68d95d5f4adb4466d3332f6954cf827568158f41e5ae2206bf",
+    "000177.jpg": "015b19a79efc9aa711d23c1bb9b09603c1276f1d4c4c6db1cf43e66fd6f5744a",
+    "000178.jpg": "186aaef962329b482f8ba18acd43a0f0ffea0f10e14dc514d2e1d3d163573255",
+    "000179.jpg": "c5453113ae19e2f001f4d33811af79ecbd556d4b79c4f739fa53a0e42f70f7bf",
+    "000181.jpg": "c6c902a34c474446a4bf281d69d7e3f06f3607fbd5646d152758cf2f93b4b525",
+    "000182.jpg": "db14109e9b772aefa1f436f57ee0981edfb348722668e563fb98e1f4d04e8168",
+    "000183.jpg": "97b922223f5c3730813a12dbaa431ccaf48ffa47e3f6be197b7f167955c82acf",
+    "000390.jpg": "117898b9d1064cca40da2d2cc8a2d8a0bf8997e47a05ecd2696b9447be792f76",
+    "000392.jpg": "436485831c40ccd9b6f181e49e6a6042bc54c96fbf467b5f380b21836bef8ca6",
+    "000394.jpg": "0f6d1ab96125e379040b20667637309cc44fdb76b53dcccde2d88de88fa775ee",
+    "000397.jpg": "e88e4ae19d5087e874bad1806310fd3e65c3e0243ce1b4ca0cd500f67c2560d1"
+  },
+  "estimates": [
+    {
+      "index": 175,
+      "t": 91.306,
+      "error_m": 0.7123469938223961,
+      "live_delta_m": 8.392905409640163e-13,
+      "rms_px": 0.012637541543599282,
+      "mission_seq": 3
+    },
+    {
+      "index": 176,
+      "t": 91.39,
+      "error_m": 0.6312362039078413,
+      "live_delta_m": 4.3292303742310353e-13,
+      "rms_px": 0.008622124269941855,
+      "mission_seq": 3
+    },
+    {
+      "index": 177,
+      "t": 91.474,
+      "error_m": 0.6876909065851351,
+      "live_delta_m": 3.9485881011010736e-13,
+      "rms_px": 0.00526793009441137,
+      "mission_seq": 3
+    },
+    {
+      "index": 178,
+      "t": 91.558,
+      "error_m": 0.7353226092004689,
+      "live_delta_m": 4.689565267280242e-13,
+      "rms_px": 0.015783944840228575,
+      "mission_seq": 3
+    },
+    {
+      "index": 179,
+      "t": 91.642,
+      "error_m": 0.6035858961787725,
+      "live_delta_m": 3.422623119312967e-13,
+      "rms_px": 0.012796837745609193,
+      "mission_seq": 3
+    },
+    {
+      "index": 181,
+      "t": 91.81,
+      "error_m": 0.6640766563875653,
+      "live_delta_m": 6.874294501907425e-13,
+      "rms_px": 0.02990728614867809,
+      "mission_seq": 3
+    },
+    {
+      "index": 182,
+      "t": 91.894,
+      "error_m": 0.6583843604631534,
+      "live_delta_m": 6.259349414539083e-13,
+      "rms_px": 0.024837612495615842,
+      "mission_seq": 3
+    },
+    {
+      "index": 183,
+      "t": 91.978,
+      "error_m": 0.6653506505717894,
+      "live_delta_m": 7.731541569918891e-13,
+      "rms_px": 0.004347746918197042,
+      "mission_seq": 3
+    },
+    {
+      "index": 390,
+      "t": 148.762,
+      "error_m": 0.9771679493537924,
+      "live_delta_m": 2.4286627941697683e-13,
+      "rms_px": 0.017521045782747352,
+      "mission_seq": 6
+    },
+    {
+      "index": 392,
+      "t": 148.93,
+      "error_m": 0.5984756960096694,
+      "live_delta_m": 7.694989662143676e-13,
+      "rms_px": 0.03145842929991826,
+      "mission_seq": 6
+    },
+    {
+      "index": 394,
+      "t": 149.098,
+      "error_m": 0.6120228249925866,
+      "live_delta_m": 5.797016207405301e-13,
+      "rms_px": 0.014955010344254845,
+      "mission_seq": 6
+    },
+    {
+      "index": 397,
+      "t": 149.35,
+      "error_m": 0.9003583858810829,
+      "live_delta_m": 3.061331029586854e-13,
+      "rms_px": 0.02117666511773721,
+      "mission_seq": 6
+    }
+  ],
+  "limitations": "Native ArduPlane aerodynamic/flat-ground FDM drives Gazebo airframe and calibrated camera; Gazebo simulates boat/waves. No aircraft-water/terrain collision coupling, real-vessel/airframe calibration, camera blur/noise or actual flight validation. Image tracking is an intermittent two-pass survey, not persistent lock under occlusion."
+}

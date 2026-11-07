@@ -1,0 +1,20 @@
+{
+  "name": "Coastal EDF UAV",
+  "license": "MIT",
+  "author": "Original project geometry",
+  "length_m": 1.15,
+  "wingspan_m": 1.6,
+  "exposed_propellers": false,
+  "propulsion_visual": "Enclosed aft duct and exhaust; internal fan is not exposed",
+  "mesh_sha256": {
+    "edf_canopy.dae": "dce188d5674d7c577fbc90464181cb305f397e01ee1b96200032b3130c92a404",
+    "edf_exhaust.dae": "3c73e7cf00a9718be1ecd57c4738e7ab1975e790e449b3e29392c88c7c4a3fd4",
+    "edf_fuselage.dae": "97404b6107e70e4c32acd20e0f71842dcafd08996322e455e3d7a8e6fddeb5b8",
+    "edf_nozzle_dark.dae": "f2a1970f483800128464465ee8f98bc06bb69f66aa25d8f0ca35fa8615bcacc4",
+    "edf_tail_left.dae": "6c9244df4afa89300c740cc2a4462c2c3c502e405f075e74151c3da907da4736",
+    "edf_tail_right.dae": "c2b191fd23a4bb31e220ce058b829fe84c8c171fe2018311e004813d3cb653c5",
+    "edf_wing_left.dae": "46b555120aecb487f65a3c005a0d4d9850f4c7859fbc5f252a8da55709d2a697",
+    "edf_wing_right.dae": "64baec8a1649ee8fd72791c9ac1d0f8e203607cc2aa758e442a15933da2e5212"
+  },
+  "limitations": "Original conceptual visual only. Native generic ArduPlane FDM and propulsion retained; not calibrated EDF/jet dynamics."
+}

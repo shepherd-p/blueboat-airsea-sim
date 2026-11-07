@@ -1,7 +1,7 @@
 {
   "sea_state": 1,
   "home": [51.5246, -0.1340, 10.0, 90.0],
-  "aircraft": {"length_m": 0.9606749136903475, "wingspan_m": 1.6, "mass_kg": 2.0, "wing_area_m2": 0.45, "visual_model": "PX4 Believer", "visual_license": "Apache-2.0"},
+  "aircraft": {"length_m": 1.15, "wingspan_m": 1.6, "mass_kg": 2.0, "wing_area_m2": 0.45, "visual_model": "Coastal EDF UAV, enclosed fan, no exposed propeller", "visual_license": "MIT"},
   "runway": {"x_min_m": -100, "x_max_m": 500, "center_y_m": 0, "width_m": 18},
   "boat_initial_enu_m": [300, 170, 0.01116959],
   "camera": {"width": 1920, "height": 1080, "hfov_rad": 0.8726646259971648, "rate_hz": 12, "black_border_m": 0.432},

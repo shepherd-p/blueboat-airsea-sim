@@ -1,4 +1,4 @@
-"""Apache-2.0 PX4 Believer visual adapted to the native ArduPlane body frame."""
+"""Legacy PX4 Believer importer and the current original EDF visual entry point."""
 from pathlib import Path
 import copy
 import hashlib
@@ -126,7 +126,7 @@ def prepare_meshes(out,wingspan=1.6):
     return directory,metadata
 
 
-def aircraft(world,out,wingspan=1.6):
+def believer_aircraft(world,out,wingspan=1.6):
     directory,meta=prepare_meshes(out,wingspan);s=meta['uniform_scale'];height=.09
     model=element(world,'model',name='aircraft');element(model,'static','true')
     element(model,'pose','0 0 .1 0 0 0')
@@ -164,3 +164,8 @@ def aircraft(world,out,wingspan=1.6):
     p=element(model,'plugin',filename='AirSeaAircraft',name='airsea::Aircraft')
     element(p,'pose_topic','/airsea/aircraft/truth_pose')
     return model
+
+
+def aircraft(world,out,wingspan=1.6):
+    from edf_airframe import aircraft as edf_aircraft
+    return edf_aircraft(world,out,wingspan)

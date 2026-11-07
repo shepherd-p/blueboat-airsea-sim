@@ -45,7 +45,12 @@ def prepare(run,out,mode='highlights',pilot_seconds=6):
     second=next(t for t in detections if t-detections[0]>20)
     lift=next(s['timestamp']+epoch for s in native if -s['position'][2]>2)
     landing=report['touchdown']['t']+epoch
-    if mode=='highlights':
+    if mode=='review':
+        segments=[(max(start,lift-4),16,0),(lift+17,8,0),
+                  (detections[0]-5,4,0),(detections[0]-.7,3,1),
+                  (second-7,6,0),(second-.7,3,1),
+                  (landing-65,8,0),(landing-12,min(24,end-(landing-12)),0)]
+    elif mode=='highlights':
         segments=[(max(start,lift-4),16,0),(detections[0]-5,4,0),
                   (detections[0]-.7,3,1),(second-7,6,0),(second-.7,3,1),
                   (landing-12,min(24,end-(landing-12)),0)]
@@ -127,7 +132,7 @@ def prepare(run,out,mode='highlights',pilot_seconds=6):
         if plugin.get('filename') not in ('MinimalScene','GzSceneManager'):gui.remove(plugin)
     plugin=ET.SubElement(gui,'plugin',filename='AirSeaReplay',name='Frame Exact Replay')
     ET.SubElement(plugin,'directory').text=str(out)
-    ET.SubElement(plugin,'both_views').text='true' if mode!='highlights' else 'false'
+    ET.SubElement(plugin,'both_views').text='false' if mode in ('highlights','review') else 'true'
     tree.write(out/'replay.sdf',encoding='utf-8',xml_declaration=True)
     metadata={'kind':'30 fps presentation re-render of original recorded native FDM trajectories',
         'original_run':str(run),'mode':mode,'fps':fps,'frames':len(targets),'duration_s':len(targets)/fps,
@@ -180,5 +185,5 @@ def render(out):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--run',type=Path,required=True);parser.add_argument('--out',type=Path,required=True)
-    parser.add_argument('--mode',choices=['pilot','highlights','full'],default='highlights');parser.add_argument('--pilot-seconds',type=float,default=6)
+    parser.add_argument('--mode',choices=['pilot','highlights','review','full'],default='highlights');parser.add_argument('--pilot-seconds',type=float,default=6)
     args=parser.parse_args();render(prepare(args.run,args.out,args.mode,args.pilot_seconds))

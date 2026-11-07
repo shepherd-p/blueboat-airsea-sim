@@ -1,5 +1,15 @@
 # Validation provenance
 
+## Stable EDF visual and explicit image localization, 2026-11-08
+
+Fresh run airsea_edf_stable_01 passed all 25 independent checks with the
+new original no-exposed-propeller visual and revised pitch control. The
+1,617 original sensor frames yielded 12 accepted fixes (8/4 per pass),
+position error P95 0.935 m and autonomous runway touchdown at 0.837 m/s.
+Search-corridor raw pitch-rate P95 was 1.554 deg/s versus 61.075 deg/s in
+the previous live demonstration. Current evidence is in edf_20261108/.
+See REVISION_20261108.md for exact comparison windows and limitations.
+
 ## Believer visual replacement, 2026-11-07
 
 A fresh full run (`airsea_believer_01`) with the Apache-2.0 PX4 Believer
@@ -25,7 +35,7 @@ throttle-driven propeller animation/blur and a closer chase view. Generic
 flight dynamics, intermittent image survey and ideal-camera limitations
 remain; these results do not calibrate a real Believer or its motor RPM.
 
-The current docs/evidence and Believer release use this run. Earlier source,
+The older root-level docs/evidence and Believer release use this run. Earlier source,
 videos and data below remain separately available in the original release.
 
 ## Earlier procedural-aircraft mission, 2026-11-07

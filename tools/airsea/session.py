@@ -129,7 +129,8 @@ class Session:
 def run(out,rtf=.6,pilot=False):
     out=out.resolve();out.mkdir(parents=True,exist_ok=False)
     world=prepare(out,rtf)
-    session=Session(out,rtf);children=[];logs=[];fdm=None;mission=None
+    (out/'arduplane_used.parm').write_bytes((ROOT/'config/arduplane.parm').read_bytes())
+    session=Session(out,rtf);children=[];logs=[];fdm=None;mission=None;sim=None
     status='failed';error=None
     def launch(cmd,name):
         log=(out/(name+'.log')).open('w');logs.append(log)
@@ -156,6 +157,8 @@ def run(out,rtf=.6,pilot=False):
             '--defaults',str(ROOT/'config/arduplane.parm'),'--serial0','tcp:5880','--serial1','none','--serial2','none','--wipe'],'arduplane')
         mission=PlaneMission(out)
         def tick(m,f):
+            if sim.poll() is not None:
+                raise RuntimeError(f'Gazebo exited with status {sim.returncode}; inspect gazebo.log')
             session.tick(m,f)
             if pilot and f.state and f.state['timestamp']>100:raise InterruptedError('Pilot capture complete; full landing not requested in this pilot')
         mission.run(fdm,timeout=2400,process=plane,on_tick=tick)
@@ -166,7 +169,7 @@ def run(out,rtf=.6,pilot=False):
         error=repr(exc);raise
     finally:
         if mission:mission.save()
-        if session.capture_requested:
+        if session.capture_requested and sim is not None and sim.poll() is None:
             session.capture_pub.publish(Boolean(data=False))
             deadline=time.monotonic()+45
             while not (out/'capture_closed.txt').exists() and time.monotonic()<deadline:
