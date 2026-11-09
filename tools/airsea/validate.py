@@ -76,15 +76,44 @@ def validate(out,pilot=False):
             candidates.append((rms,tv.flatten()))
         if not candidates:return None
         rms,translation=min(candidates,key=lambda v:v[0])
-        if rms>=2:return None
+        edges=np.linalg.norm(pixels-np.roll(pixels,-1,axis=0),axis=1)
+        gimballed='camera_qw' in row
+        if rms>=(1.2 if gimballed else 2) or (gimballed and (np.mean(edges)<20 or np.min(edges)<12)):return None
         R=rotation([float(row[k]) for k in ('nav_qw','nav_qx','nav_qy','nav_qz')])
         origin=np.array([float(row[k]) for k in ('nav_x','nav_y','nav_z')])+R@np.array([0,0,-.035])
-        return origin+R@down@C.T@translation,rms
+        mount_rotation=rotation([float(row[k]) for k in ('camera_qw','camera_qx','camera_qy','camera_qz')]) if 'camera_qw' in row else down
+        return origin+R@mount_rotation@C.T@translation,rms
     matches=True;estimates=[];hashes={}
+    gimballed=calibration.get('orientation_model')=='per_frame_body_camera_quaternion'
+    aim=np.array(calibration.get('initial_search_point_enu_m',[0,0,0]),dtype=float)
+    causal_aim=True;pointing_geometry=True;rate_bounded=True;previous_camera=None;previous_time=None;have_image_fix=False
     for i,row in enumerate(rows):
         file=out/'onboard_frames'/f'{i:06d}.jpg'
         image=cv2.imread(str(file));assert image is not None
         result=solve(image,row)
+        stamp=float(row['gazebo_s'])
+        if gimballed:
+            causal_aim &= np.linalg.norm(aim-np.array([float(row[k]) for k in ('aim_x','aim_y','aim_z')]))<1e-7
+            causal_aim &= row['pointing_source']==('past_image_estimate' if have_image_fix else 'planned_search_point')
+            R=rotation([float(row[k]) for k in ('nav_qw','nav_qx','nav_qy','nav_qz')])
+            camera=rotation([float(row[k]) for k in ('camera_qw','camera_qx','camera_qy','camera_qz')])
+            origin=np.array([float(row[k]) for k in ('nav_x','nav_y','nav_z')])+R@np.array([0,0,-.035])
+            direction=aim-origin;horizontal=np.linalg.norm(direction[:2]);limit=max(.1,-direction[2])*math.tan(math.radians(65))
+            if horizontal>limit:direction[:2]*=limit/horizontal
+            direction[2]=min(-.1,direction[2]);direction/=np.linalg.norm(direction)
+            left=np.cross([0,1,0],direction);left/=np.linalg.norm(left);up=np.cross(direction,left)
+            desired=R.T@np.column_stack((direction,left,up))
+            def angle(a,b):return math.acos(float(np.clip((np.trace(a.T@b)-1)/2,-1,1)))
+            if previous_camera is not None:
+                budget=math.radians(120)*(stamp-previous_time)
+                rate_bounded &= angle(previous_camera,camera)<=budget+1e-6
+                pointing_geometry &= abs(angle(camera,desired)-max(0,angle(previous_camera,desired)-budget))<1e-5
+            else:pointing_geometry &= angle(camera,desired)<1e-5
+            previous_camera=camera;previous_time=stamp
+            if result is not None:
+                gain=min(.25,(stamp-float(rows[i-1]['gazebo_s']))/.4) if i else .25
+                position=result[0];aim=aim*(1-gain)+np.array([position[0],position[1],np.clip(position[2],0,.5)])*gain
+                have_image_fix=True
         logged=bool(int(row['detected']))
         matches &= (result is not None)==logged
         if result is not None:
@@ -117,6 +146,16 @@ def validate(out,pilot=False):
         'boat_moves_during_mission':np.ptp([float(r['boat_x']) for r in rows])>1,
     })
     if not pilot:checks['detections_on_both_search_passes']=all(n>0 for n in detections_per_pass.values())
+    visibility={}
+    for phase in (3,6):
+        phase_times=[e['t'] for e in estimates if e['mission_seq']==phase];groups=[]
+        for stamp in phase_times:
+            if not groups or stamp-groups[-1][-1]>.35:groups.append([])
+            groups[-1].append(stamp)
+        visibility[phase]={'accepted_frames':len(phase_times),'longest_continuous_detection_s':max((g[-1]-g[0] for g in groups),default=0),'total_observation_span_s':max(phase_times)-min(phase_times) if phase_times else 0}
+    if gimballed:
+        checks.update(gimbal_pointing_reproduced_from_past_images=bool(causal_aim),gimbal_geometry_reproduced=bool(pointing_geometry),gimbal_slew_within_120_deg_s=bool(rate_bounded))
+        checks['sustained_image_detection_on_search_passes']=all(v['longest_continuous_detection_s']>=2 for phase,v in visibility.items() if not pilot or phase==3)
     videos={}
     for name in ('FixedWing_Full_Mission_Clean.mp4','Onboard_Camera_Clean.mp4'):
         path=out/name
@@ -131,7 +170,7 @@ def validate(out,pilot=False):
         note='Video container fps can contain repeated frames. Flight/vision acceptance does not establish presentation smoothness; use check_replay.py for frame-exact presentation exports.')
     report=dict(passed=all(checks.values()),pilot=pilot,checks=checks,capture_timing=capture_timing,
         camera_frames=len(rows),image_detections=len(estimates),image_track_span_s=float(np.ptp(times)) if len(times) else 0,
-        detections_per_search_pass=detections_per_pass,
+        detections_per_search_pass=detections_per_pass,visibility_per_search_pass=visibility,
         position_error_m=dict(median=float(np.median(errors)),p95=float(np.percentile(errors,95)),maximum=float(errors.max())) if len(errors) else None,
         touchdown=dict(t=touchdown['timestamp'],east=touchdown['position'][1],north=touchdown['position'][0],sink_mps=before['velocity'][2]) if touchdown else None,
         final_position_ned_m=last['position'],maximum_altitude_m=float(alt.max()),

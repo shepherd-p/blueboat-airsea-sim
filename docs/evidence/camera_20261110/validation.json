@@ -1,0 +1,675 @@
+{
+  "passed": true,
+  "pilot": false,
+  "checks": {
+    "world_hash_matches": true,
+    "sea_state_1": true,
+    "normal_plane_arming": true,
+    "real_fdm_not_scripted_path": true,
+    "aircraft_comparable_size": true,
+    "runway_takeoff": true,
+    "rover_firmware_armed": true,
+    "archived_camera_frame_set": true,
+    "camera_follows_aircraft": true,
+    "all_mission_phases": true,
+    "autonomous_landing_and_disarm": true,
+    "touchdown_on_runway": true,
+    "touchdown_sink_below_2mps": true,
+    "stopped_on_runway": true,
+    "image_based_second_pass_replanned": true,
+    "estimator_uses_navigation_not_truth": true,
+    "blank_image_has_no_detection": true,
+    "independent_pixel_estimates_match_live": true,
+    "at_least_5_airborne_detections": true,
+    "image_track_span_at_least_1s": true,
+    "position_error_p95_below_3m": true,
+    "boat_moves_during_mission": true,
+    "detections_on_both_search_passes": true,
+    "gimbal_pointing_reproduced_from_past_images": true,
+    "gimbal_geometry_reproduced": true,
+    "gimbal_slew_within_120_deg_s": true,
+    "sustained_image_detection_on_search_passes": true,
+    "FixedWing_Full_Mission_Clean.mp4_decodes": true,
+    "Onboard_Camera_Clean.mp4_decodes": true
+  },
+  "capture_timing": {
+    "archived_sensor_frames": 1354,
+    "elapsed_simulation_s": 256.08000000000004,
+    "effective_image_hz": 5.283505154639174,
+    "median_gap_s": 0.09999999999999432,
+    "p95_gap_s": 0.2508000000000035,
+    "maximum_gap_s": 13.732,
+    "note": "Video container fps can contain repeated frames. Flight/vision acceptance does not establish presentation smoothness; use check_replay.py for frame-exact presentation exports."
+  },
+  "camera_frames": 1354,
+  "image_detections": 64,
+  "image_track_span_s": 60.86399999999999,
+  "detections_per_search_pass": {
+    "3": 35,
+    "6": 29
+  },
+  "visibility_per_search_pass": {
+    "3": {
+      "accepted_frames": 35,
+      "longest_continuous_detection_s": 2.7719999999999914,
+      "total_observation_span_s": 3.6119999999999948
+    },
+    "6": {
+      "accepted_frames": 29,
+      "longest_continuous_detection_s": 2.603999999999985,
+      "total_observation_span_s": 2.603999999999985
+    }
+  },
+  "position_error_m": {
+    "median": 0.5766869097749208,
+    "p95": 0.9239749294140904,
+    "maximum": 3.001147359827568
+  },
+  "touchdown": {
+    "t": 272.346578,
+    "east": 10.627611,
+    "north": 0.679693,
+    "sink_mps": 0.831095
+  },
+  "final_position_ned_m": [
+    0.642009,
+    36.444258,
+    -0.1
+  ],
+  "maximum_altitude_m": 51.682612,
+  "videos": {
+    "FixedWing_Full_Mission_Clean.mp4": {
+      "format": {
+        "duration": "256.040000",
+        "size": "200213137"
+      }
+    },
+    "Onboard_Camera_Clean.mp4": {
+      "format": {
+        "duration": "256.040000",
+        "size": "195116555"
+      }
+    }
+  },
+  "detection_frame_sha256": {
+    "000124.jpg": "2319cbe926a84e3af903c161bea73b02435350b152187a8b4cc4a291067c31c5",
+    "000134.jpg": "8d1366939f0a4365a33b97960b5917a33476bcedc9f4f4c7bbe63105ee8e7dfb",
+    "000135.jpg": "06dab5154a5c0ddab17a025cf2273634f71d20639ad7f27c847bab6445efc742",
+    "000136.jpg": "d319ea81de9107ae53fb0366e64b6a04a98b67944b556f41d4d06e157de26108",
+    "000137.jpg": "cee86afa9b7d125d0a55db12661a1b7c3d4a4fe66b3b53424d5ff197d38e5da3",
+    "000138.jpg": "1b2a677ba54921bddd70e2f1a3aefc20cb408ba654d2d481b80b30c4914f045d",
+    "000139.jpg": "d80ec6878d765007b7eaa8e63f419c193e3f2f3f7adb6d3fe975dd8782ea6c4a",
+    "000140.jpg": "796ef90087546856ed3da4e9596b3a5e188fa5cdbaf64540f7369e77543977b6",
+    "000141.jpg": "eb060fd42cd0fd7eefa02bca2b171cc85997881b505eae22e35c324b326d1f47",
+    "000142.jpg": "1c1df55a47d0f5124e8a49000967db2520bad2b05020569e19174ba7a5e38fc2",
+    "000143.jpg": "23e094165bff7de9b7263a3c44dacbd7be4a81873e8d648166130f9c8722af0c",
+    "000144.jpg": "02f268bf4ce15efb7edbd332b3dafa11ccedf32c0f804d5ad4325c48493eec3d",
+    "000145.jpg": "ad752a02f5293544efe36b5e4826a40e31136bdfe3c73bac935bda23df69fdbc",
+    "000146.jpg": "b7355dd9804281c7b8a556983d388617ddc57e9a2dfe6b850bef23bc70ca59be",
+    "000147.jpg": "b50613f5aeec01368e1c81db50460b0e2cd80cf2fe423c17ca5f5caca69ca7c1",
+    "000148.jpg": "bdb9dc40d4ad5abfe3ad342350b34f5035ab2ff598fc26a6ffc931735cc3482a",
+    "000149.jpg": "f948973814cef606e0aa5cbd349979982370c08c23a9f31423d2720e00b6590b",
+    "000150.jpg": "e96aaf0e3244fd1850ad853a3f2e50b11be0d870703e6c70a05f03b9623d3d7d",
+    "000151.jpg": "e92e3d5d17aab82727335e26d1f2037ab3e014eca653be5813fcdac0dba8231f",
+    "000152.jpg": "06ae9543e07b3ec12e035088bc8ef97b6a122e5ec3cc18f8351ab89b15f7b8cf",
+    "000153.jpg": "6e61c7cdca92f68eaff75e2a2864e67ab7bd47ad2224c8ce45364dfc6f606c0b",
+    "000154.jpg": "d74acba211b5d812665ac6ca75e196de408f7f3bda8888adb5d98aa9b56f6a5d",
+    "000155.jpg": "7828059aa69ec2ce06b64647658b0e931654f7a748b7c9b8366ac066f121096e",
+    "000156.jpg": "47834c0a3b92b293bca9fba856687f02a38aede7370dc43845dcdad124421b30",
+    "000157.jpg": "d2a5272516b6a8b4b50902284c93e80f1e6ed40217cc8db1ddcbdd2b6dc940c5",
+    "000158.jpg": "054f43b6b3af21f3ffb3a1410369b71931111ed8e0f82c687093001fd5bc87d0",
+    "000159.jpg": "0ae03c898e2073ad205472b3835e0f8f14e35577cc336f872880f20d66c5db8d",
+    "000160.jpg": "437c5c82b39090e040cb56db4a951b0f3523d6f3b3671f646b9943a5813430c3",
+    "000161.jpg": "745da27931f30fb6160498d2a227b619f88cbfacaa68374ae1b8ae587e7acb84",
+    "000162.jpg": "ed49e4c5c5ccfd6f9de52a0647e75e88393303fe836cfeb4a86b246037536b14",
+    "000163.jpg": "cdcd2145280c9e588dfc65b91632676dd53502de6a29d10f6bda9ec147f341b4",
+    "000164.jpg": "ed1625463f73796caf904ac651180f5d751f53bb75acdb042c78fed8428294f8",
+    "000165.jpg": "7c0a5d457d209c023e1533abbbe1c86d810f243c29c7d3355edd7fe812a33a02",
+    "000166.jpg": "788aed7784318385f66529a226c5903a9778a20c4fe47e6b4161e35596817500",
+    "000167.jpg": "0ec12321ce1f2983ca10bf47e01e07526c4a387c0e4d85892c65920e3398e584",
+    "000226.jpg": "7d116f3710d159075477796b06555b81175627993aecce4899e4a121a92d5d28",
+    "000228.jpg": "70c2238f10e5766fe80b8914e0e0b6719e22f4e4173a70b677641c3ec2e3f567",
+    "000229.jpg": "dbf04766f7c6a413ea9834d2c5ad81d5949c3f0269890ffad9f6ba88ecda4459",
+    "000230.jpg": "4b4a276a860d415c5d69f67bf6c535886584a81528b018a22dcb32ae46eecb48",
+    "000231.jpg": "6e2c80f959e011f59aa13032444ec474889fddd305094d7f7d6694ab509ffa22",
+    "000232.jpg": "6f6c791c9f41021886417b8b434500589e8125812ce0d184995e5c4217331fa5",
+    "000233.jpg": "ea6eb2d1cc298176fd9d2d16ac6eb2911d4e2738044eec6e322620e1e32bc181",
+    "000234.jpg": "fdfb8c6617f0e3e8f8436f933b5012d371d3a0ffa4e544cffff86fcbb0fad90a",
+    "000235.jpg": "3260445e9e759c33f6e7af500c7a021332ef6a37d442fba2d8a207fb19c5e302",
+    "000236.jpg": "b0e7769486ebeaab7db16d77f3ac4cc0b58d8e7e5d837f38ff5b1672e819d881",
+    "000237.jpg": "97b22846b49b78123c9ce561cab2618ecf2cebaafefedd8a75d5f3cb8599c094",
+    "000238.jpg": "3e437633f8f6ea21e80422c15d51297f71587eb8095c1e04510efd78b3d5455a",
+    "000239.jpg": "2b22ce5a91b8f5c58f27b77bd7673258ade0a070c9a375d401a155092bd844b8",
+    "000240.jpg": "238fc32288a194df2b6d99a57351073ab14330bc4a87cfb6ceefb36fe5a1ba42",
+    "000241.jpg": "62c18b9445e136641d591cf5221105bdcba82f5b049ecb9420db695ac8bf0f82",
+    "000242.jpg": "0933bc40804e53de1e9c578fa54a54d124b40d75c69056641cddb272612f126f",
+    "000243.jpg": "a5224fff60a5b6d82e685b2c7e8365d8a174d131b71f17df1934f2648e165c64",
+    "000244.jpg": "ff4e6fcfbf8a7a621082a1cdc13eff626852bfc0419bb8a3b3c5c5a1eecbc92c",
+    "000245.jpg": "f0b4f818c993d08560ec599d996bdbea050e388c683c88b55b9e69053b115fbc",
+    "000246.jpg": "2657e507983edbfc9b6d8e50b61414bfd8388a4fec69e75573121a45f533f7d9",
+    "000247.jpg": "1c23e0ac649cfba59a14c5406bdc9e05a932ad147ba47df470bdbb95af3cb145",
+    "000248.jpg": "912da8f1ad807a9a2721ac57414fec1e1825fa981f0a3d92d722a9bf1f6483a6",
+    "000249.jpg": "5575b98113d110d12d3edeabb4f5514b85d3a7fbee3b30dc010afaf3a436656f",
+    "000250.jpg": "13257c1f5cfd527e5866e76ae2c727035ca0f7c2558f031924821f23227cdf38",
+    "000251.jpg": "06be9c64fe63d8ee456c7e109dcd5c3c6e41faeff7bfb0846b7bf391cf159254",
+    "000252.jpg": "3d08a3073283edcfbbe0b8db56e96d7a723416643dd2174109af45ce2441a3b4",
+    "000253.jpg": "d12b58814340d231fc74a70d9bfae0b335168d06371d62689648a8be3cdd572c",
+    "000254.jpg": "b82a344db17532d34cca421e76eb2f188ce44ed077e9ea7cc7af989a568f2404",
+    "000257.jpg": "029c99ec1df626a3d73e54edda84bb93919a216a64372b2c188864cf46b71a79"
+  },
+  "estimates": [
+    {
+      "index": 124,
+      "t": 89.45,
+      "error_m": 3.001147359827568,
+      "live_delta_m": 1.4379869881856494e-13,
+      "rms_px": 0.14193338347659937,
+      "mission_seq": 3
+    },
+    {
+      "index": 134,
+      "t": 90.29,
+      "error_m": 1.2322196364894855,
+      "live_delta_m": 4.3016573931138255e-13,
+      "rms_px": 0.03389541853768508,
+      "mission_seq": 3
+    },
+    {
+      "index": 135,
+      "t": 90.374,
+      "error_m": 0.5991317343623402,
+      "live_delta_m": 2.8571624051177725e-13,
+      "rms_px": 0.013224863415152778,
+      "mission_seq": 3
+    },
+    {
+      "index": 136,
+      "t": 90.458,
+      "error_m": 0.857723510251252,
+      "live_delta_m": 6.236973374507107e-13,
+      "rms_px": 0.020973520874468344,
+      "mission_seq": 3
+    },
+    {
+      "index": 137,
+      "t": 90.542,
+      "error_m": 0.49165508241303024,
+      "live_delta_m": 3.824379477325608e-13,
+      "rms_px": 0.0031961831192623157,
+      "mission_seq": 3
+    },
+    {
+      "index": 138,
+      "t": 90.626,
+      "error_m": 0.5165794271977994,
+      "live_delta_m": 1.6077750610154943e-13,
+      "rms_px": 0.022606984934117953,
+      "mission_seq": 3
+    },
+    {
+      "index": 139,
+      "t": 90.71,
+      "error_m": 0.7683251539536905,
+      "live_delta_m": 5.969500638946337e-13,
+      "rms_px": 0.007076849796711429,
+      "mission_seq": 3
+    },
+    {
+      "index": 140,
+      "t": 90.794,
+      "error_m": 0.6846043125441487,
+      "live_delta_m": 2.6206005509589006e-13,
+      "rms_px": 0.025902854561042608,
+      "mission_seq": 3
+    },
+    {
+      "index": 141,
+      "t": 90.878,
+      "error_m": 0.49346199250440537,
+      "live_delta_m": 1.8008701269717204e-13,
+      "rms_px": 0.065068683159762,
+      "mission_seq": 3
+    },
+    {
+      "index": 142,
+      "t": 90.962,
+      "error_m": 0.6413816299705283,
+      "live_delta_m": 7.861786444931772e-13,
+      "rms_px": 0.029230824499787374,
+      "mission_seq": 3
+    },
+    {
+      "index": 143,
+      "t": 91.046,
+      "error_m": 0.5485547304355191,
+      "live_delta_m": 4.865127012440172e-13,
+      "rms_px": 0.06319859043893505,
+      "mission_seq": 3
+    },
+    {
+      "index": 144,
+      "t": 91.13,
+      "error_m": 0.5145612566504555,
+      "live_delta_m": 8.645039790279612e-14,
+      "rms_px": 0.010746845372725102,
+      "mission_seq": 3
+    },
+    {
+      "index": 145,
+      "t": 91.214,
+      "error_m": 0.4544928985228188,
+      "live_delta_m": 7.37395977142289e-13,
+      "rms_px": 0.025379650218503743,
+      "mission_seq": 3
+    },
+    {
+      "index": 146,
+      "t": 91.298,
+      "error_m": 0.5879332255754244,
+      "live_delta_m": 1.5310776555999338e-13,
+      "rms_px": 0.06414863168271431,
+      "mission_seq": 3
+    },
+    {
+      "index": 147,
+      "t": 91.382,
+      "error_m": 0.46372173285701707,
+      "live_delta_m": 3.948470219548207e-13,
+      "rms_px": 0.03316463849797596,
+      "mission_seq": 3
+    },
+    {
+      "index": 148,
+      "t": 91.466,
+      "error_m": 0.5109473207662913,
+      "live_delta_m": 7.19590109168191e-13,
+      "rms_px": 0.013176287606872925,
+      "mission_seq": 3
+    },
+    {
+      "index": 149,
+      "t": 91.55,
+      "error_m": 0.7599610897319274,
+      "live_delta_m": 1.706624870162527e-13,
+      "rms_px": 0.047672664228981115,
+      "mission_seq": 3
+    },
+    {
+      "index": 150,
+      "t": 91.634,
+      "error_m": 0.666047014713488,
+      "live_delta_m": 6.915301168899182e-13,
+      "rms_px": 0.01952626715978328,
+      "mission_seq": 3
+    },
+    {
+      "index": 151,
+      "t": 91.718,
+      "error_m": 0.45641997068483764,
+      "live_delta_m": 3.868401983766726e-13,
+      "rms_px": 0.025115475091177196,
+      "mission_seq": 3
+    },
+    {
+      "index": 152,
+      "t": 91.802,
+      "error_m": 0.5364549245227432,
+      "live_delta_m": 1.0436002180202605e-12,
+      "rms_px": 0.018989963784361404,
+      "mission_seq": 3
+    },
+    {
+      "index": 153,
+      "t": 91.886,
+      "error_m": 0.5373592226115419,
+      "live_delta_m": 7.626345100601853e-13,
+      "rms_px": 0.04140401700012187,
+      "mission_seq": 3
+    },
+    {
+      "index": 154,
+      "t": 91.97,
+      "error_m": 0.4590975066247151,
+      "live_delta_m": 6.259648209880963e-13,
+      "rms_px": 0.060083567968299445,
+      "mission_seq": 3
+    },
+    {
+      "index": 155,
+      "t": 92.054,
+      "error_m": 0.5071099619378688,
+      "live_delta_m": 7.963152347747379e-13,
+      "rms_px": 0.04231458699346256,
+      "mission_seq": 3
+    },
+    {
+      "index": 156,
+      "t": 92.138,
+      "error_m": 0.7192608937881159,
+      "live_delta_m": 6.233459488259268e-13,
+      "rms_px": 0.04882394826625856,
+      "mission_seq": 3
+    },
+    {
+      "index": 157,
+      "t": 92.222,
+      "error_m": 0.6375121125936623,
+      "live_delta_m": 4.440217586788543e-13,
+      "rms_px": 0.022522276263485262,
+      "mission_seq": 3
+    },
+    {
+      "index": 158,
+      "t": 92.306,
+      "error_m": 0.5068317789684698,
+      "live_delta_m": 4.764346965170631e-13,
+      "rms_px": 0.045748207605164425,
+      "mission_seq": 3
+    },
+    {
+      "index": 159,
+      "t": 92.39,
+      "error_m": 0.5913093522010724,
+      "live_delta_m": 1.1373086135857742e-13,
+      "rms_px": 0.004790812899345786,
+      "mission_seq": 3
+    },
+    {
+      "index": 160,
+      "t": 92.474,
+      "error_m": 0.5978912920290167,
+      "live_delta_m": 7.280289663791786e-13,
+      "rms_px": 0.029451454357332964,
+      "mission_seq": 3
+    },
+    {
+      "index": 161,
+      "t": 92.558,
+      "error_m": 0.45151423530848595,
+      "live_delta_m": 6.63852027462387e-13,
+      "rms_px": 0.05139618749997055,
+      "mission_seq": 3
+    },
+    {
+      "index": 162,
+      "t": 92.642,
+      "error_m": 0.9245236288123011,
+      "live_delta_m": 5.800770946316696e-13,
+      "rms_px": 0.02420704584709872,
+      "mission_seq": 3
+    },
+    {
+      "index": 163,
+      "t": 92.726,
+      "error_m": 0.7266781936551122,
+      "live_delta_m": 4.627895929572108e-13,
+      "rms_px": 0.03123753677956507,
+      "mission_seq": 3
+    },
+    {
+      "index": 164,
+      "t": 92.81,
+      "error_m": 0.575909610434744,
+      "live_delta_m": 4.688045292613969e-13,
+      "rms_px": 0.01705994893480867,
+      "mission_seq": 3
+    },
+    {
+      "index": 165,
+      "t": 92.894,
+      "error_m": 0.5838358881275849,
+      "live_delta_m": 1.2715695272123496e-13,
+      "rms_px": 0.004911293452901428,
+      "mission_seq": 3
+    },
+    {
+      "index": 166,
+      "t": 92.978,
+      "error_m": 0.8352201455033531,
+      "live_delta_m": 8.825615825130762e-13,
+      "rms_px": 0.01084521426110803,
+      "mission_seq": 3
+    },
+    {
+      "index": 167,
+      "t": 93.062,
+      "error_m": 0.6629180011987171,
+      "live_delta_m": 3.222941347519336e-13,
+      "rms_px": 0.016139783138644684,
+      "mission_seq": 3
+    },
+    {
+      "index": 226,
+      "t": 147.71,
+      "error_m": 1.0506032255316047,
+      "live_delta_m": 5.060436979827643e-13,
+      "rms_px": 0.0194542739185355,
+      "mission_seq": 6
+    },
+    {
+      "index": 228,
+      "t": 147.878,
+      "error_m": 0.6405391548490991,
+      "live_delta_m": 6.150223617822242e-13,
+      "rms_px": 0.013259401998285212,
+      "mission_seq": 6
+    },
+    {
+      "index": 229,
+      "t": 147.962,
+      "error_m": 0.8469680066749521,
+      "live_delta_m": 8.696058694179166e-13,
+      "rms_px": 0.027705782751516392,
+      "mission_seq": 6
+    },
+    {
+      "index": 230,
+      "t": 148.046,
+      "error_m": 0.5038459147924926,
+      "live_delta_m": 4.338497028287338e-13,
+      "rms_px": 0.029941362744968055,
+      "mission_seq": 6
+    },
+    {
+      "index": 231,
+      "t": 148.13,
+      "error_m": 0.5486824193169788,
+      "live_delta_m": 6.04341092582235e-13,
+      "rms_px": 0.05104819142432574,
+      "mission_seq": 6
+    },
+    {
+      "index": 232,
+      "t": 148.214,
+      "error_m": 0.5774068198148509,
+      "live_delta_m": 6.75611387028659e-13,
+      "rms_px": 0.03290479670648878,
+      "mission_seq": 6
+    },
+    {
+      "index": 233,
+      "t": 148.298,
+      "error_m": 0.665652455140392,
+      "live_delta_m": 5.217957507366529e-13,
+      "rms_px": 0.046998349735197925,
+      "mission_seq": 6
+    },
+    {
+      "index": 234,
+      "t": 148.382,
+      "error_m": 0.530266353847165,
+      "live_delta_m": 3.7029232190844897e-13,
+      "rms_px": 0.023590917430179,
+      "mission_seq": 6
+    },
+    {
+      "index": 235,
+      "t": 148.466,
+      "error_m": 0.7074716499016486,
+      "live_delta_m": 4.856703868158035e-13,
+      "rms_px": 0.04194596931505175,
+      "mission_seq": 6
+    },
+    {
+      "index": 236,
+      "t": 148.55,
+      "error_m": 0.9208656328242303,
+      "live_delta_m": 7.285424252087803e-13,
+      "rms_px": 0.045085969153868276,
+      "mission_seq": 6
+    },
+    {
+      "index": 237,
+      "t": 148.634,
+      "error_m": 0.5759669997349908,
+      "live_delta_m": 1.7056611279965963e-13,
+      "rms_px": 0.056123378342393525,
+      "mission_seq": 6
+    },
+    {
+      "index": 238,
+      "t": 148.718,
+      "error_m": 0.40552648312155704,
+      "live_delta_m": 6.845754365629139e-13,
+      "rms_px": 0.052423101612622154,
+      "mission_seq": 6
+    },
+    {
+      "index": 239,
+      "t": 148.802,
+      "error_m": 0.519302694859438,
+      "live_delta_m": 4.582862975122976e-13,
+      "rms_px": 0.018702736713371963,
+      "mission_seq": 6
+    },
+    {
+      "index": 240,
+      "t": 148.886,
+      "error_m": 0.42616732748711766,
+      "live_delta_m": 7.060661707361008e-13,
+      "rms_px": 0.02719999221885973,
+      "mission_seq": 6
+    },
+    {
+      "index": 241,
+      "t": 148.97,
+      "error_m": 0.4890491371308135,
+      "live_delta_m": 5.859393208572607e-13,
+      "rms_px": 0.01632241359510507,
+      "mission_seq": 6
+    },
+    {
+      "index": 242,
+      "t": 149.054,
+      "error_m": 0.5114782369210786,
+      "live_delta_m": 5.62721312425771e-13,
+      "rms_px": 0.02804663061676226,
+      "mission_seq": 6
+    },
+    {
+      "index": 243,
+      "t": 149.138,
+      "error_m": 0.7035088185241102,
+      "live_delta_m": 4.688036320356319e-13,
+      "rms_px": 0.05846307654962739,
+      "mission_seq": 6
+    },
+    {
+      "index": 244,
+      "t": 149.222,
+      "error_m": 0.480320649554993,
+      "live_delta_m": 2.860349091070854e-14,
+      "rms_px": 0.03366429570740491,
+      "mission_seq": 6
+    },
+    {
+      "index": 245,
+      "t": 149.306,
+      "error_m": 0.483997918257597,
+      "live_delta_m": 6.355396260441913e-13,
+      "rms_px": 0.042095876157635465,
+      "mission_seq": 6
+    },
+    {
+      "index": 246,
+      "t": 149.39,
+      "error_m": 0.683439707014121,
+      "live_delta_m": 4.3011556330206273e-13,
+      "rms_px": 0.021171008498926815,
+      "mission_seq": 6
+    },
+    {
+      "index": 247,
+      "t": 149.474,
+      "error_m": 0.5104682553116932,
+      "live_delta_m": 8.242395349963077e-13,
+      "rms_px": 0.039968139923178624,
+      "mission_seq": 6
+    },
+    {
+      "index": 248,
+      "t": 149.558,
+      "error_m": 0.430049263206931,
+      "live_delta_m": 1.7980034462405924e-13,
+      "rms_px": 0.03972886502778062,
+      "mission_seq": 6
+    },
+    {
+      "index": 249,
+      "t": 149.642,
+      "error_m": 0.9015141824558401,
+      "live_delta_m": 6.355393036111129e-13,
+      "rms_px": 0.018422290897171914,
+      "mission_seq": 6
+    },
+    {
+      "index": 250,
+      "t": 149.726,
+      "error_m": 0.6328961335686791,
+      "live_delta_m": 4.329245214954967e-13,
+      "rms_px": 0.013631010981033805,
+      "mission_seq": 6
+    },
+    {
+      "index": 251,
+      "t": 149.81,
+      "error_m": 0.4657637894903758,
+      "live_delta_m": 5.489640324380405e-13,
+      "rms_px": 0.02870945120703928,
+      "mission_seq": 6
+    },
+    {
+      "index": 252,
+      "t": 149.894,
+      "error_m": 0.48123917735362604,
+      "live_delta_m": 5.797398416245392e-13,
+      "rms_px": 0.039800429138502756,
+      "mission_seq": 6
+    },
+    {
+      "index": 253,
+      "t": 149.978,
+      "error_m": 0.6879389152009083,
+      "live_delta_m": 7.530559893491106e-13,
+      "rms_px": 0.025329082041500955,
+      "mission_seq": 6
+    },
+    {
+      "index": 254,
+      "t": 150.062,
+      "error_m": 0.5223349665589684,
+      "live_delta_m": 5.028314801081588e-13,
+      "rms_px": 0.020363505938356435,
+      "mission_seq": 6
+    },
+    {
+      "index": 257,
+      "t": 150.314,
+      "error_m": 0.9138354105440272,
+      "live_delta_m": 7.649640714951026e-13,
+      "rms_px": 0.05227275587724854,
+      "mission_seq": 6
+    }
+  ],
+  "limitations": "Native ArduPlane aerodynamic/flat-ground FDM drives Gazebo airframe and calibrated camera; Gazebo simulates boat/waves. No aircraft-water/terrain collision coupling, real-vessel/airframe calibration, camera blur/noise or actual flight validation. Image tracking is an intermittent two-pass survey, not persistent lock under occlusion."
+}

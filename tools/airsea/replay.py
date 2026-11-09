@@ -102,9 +102,17 @@ def prepare(run,out,mode='highlights',pilot_seconds=6):
     boat_error=np.linalg.norm(np.array(predicted)-actual,axis=1)
     telemetry=list(csv.DictReader((run/'flight_telemetry.csv').open()))
     throttle=np.interp(targets,[float(r['t'])+epoch for r in telemetry],[float(r['throttle'])/100 for r in telemetry])
+    camera_q=None
+    if 'camera_qw' in rows[0]:
+        cq=[[float(r[k]) for k in ('camera_qw','camera_qx','camera_qy','camera_qz')] for r in rows]
+        _,camera_q=resample(recorded_t,np.zeros((len(rows),3)),cq,targets)
     with (out/'timeline.csv').open('w',newline='') as file:
         writer=csv.writer(file);writer.writerow(['index','video_s','simulation_s','view','px','py','pz','pqw','pqx','pqy','pqz','bx','by','bz','bqw','bqx','bqy','bqz','throttle'])
         for i,t in enumerate(targets):writer.writerow([i,i/fps,t,views[i],*pp[i],*pq[i],*bp[i],*bq[i],throttle[i]])
+    # Separate file keeps existing trajectory/replay validators compatible.
+    if camera_q is not None:
+        with (out/'camera_mount.csv').open('w',newline='') as file:
+            writer=csv.writer(file);writer.writerow(['qw','qx','qy','qz']);writer.writerows(camera_q)
     tree=ET.parse(run/'world.sdf');world=tree.find('world')
     for uri in world.findall('.//mesh/uri'):
         if uri.text.startswith('model://'):continue
@@ -133,6 +141,7 @@ def prepare(run,out,mode='highlights',pilot_seconds=6):
     plugin=ET.SubElement(gui,'plugin',filename='AirSeaReplay',name='Frame Exact Replay')
     ET.SubElement(plugin,'directory').text=str(out)
     ET.SubElement(plugin,'both_views').text='false' if mode in ('highlights','review') else 'true'
+    ET.SubElement(plugin,'onboard_hfov_rad').text=str(json.loads((run/'airborne_camera_calibration.json').read_text())['hfov_rad'])
     tree.write(out/'replay.sdf',encoding='utf-8',xml_declaration=True)
     metadata={'kind':'30 fps presentation re-render of original recorded native FDM trajectories',
         'original_run':str(run),'mode':mode,'fps':fps,'frames':len(targets),'duration_s':len(targets)/fps,
@@ -146,6 +155,7 @@ def prepare(run,out,mode='highlights',pilot_seconds=6):
         'boat_clock_alignment':'Matched native SIM2 XY positions to original dense Gazebo environment telemetry; checked against archived camera truth',
         'wave_time':'original sea-state shader with explicit simulation timestamp per rendered frame',
         'new_flight_or_vision_validation':False,'frame_interpolation_from_video':False,
+        'onboard_orientation':'interpolated logged gimbal mount' if camera_q is not None else 'fixed downward mount',
         'source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (run/'native_fdm.jsonl',binary,run/'flight_telemetry.csv',run/'validation.json')},
         'timeline_sha256':hashlib.sha256((out/'timeline.csv').read_bytes()).hexdigest()}
     (out/'replay_manifest.json').write_text(json.dumps(metadata,indent=2)+'\n')

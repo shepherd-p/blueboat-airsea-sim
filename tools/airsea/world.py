@@ -60,6 +60,8 @@ def prepare(out,rtf=.6):
     gui.find("plugin[@filename='MinimalScene']/camera_pose").text='-6 -8 3 0 .25 .9'
     p=element(gui,'plugin',filename='AirSeaCapture',name='Air Sea Native Camera')
     element(p,'directory',str(out));element(p,'rate_hz',CONFIG['camera']['rate_hz'])
+    element(p,'search_point',' '.join(map(str,CONFIG['camera']['search_point_enu_m'])))
+    element(p,'hfov_rad',CONFIG['camera']['hfov_rad'])
     props=element(p,'gz-gui')
     for key,typ,val in (('showTitleBar','bool','true'),('state','string','floating'),('width','double','1280'),('height','double','720'),('x','double','0'),('y','double','0')):
         element(props,'property',val,key=key,type=typ)

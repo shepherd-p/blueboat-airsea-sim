@@ -37,7 +37,9 @@ gz::math::Pose3d pose(const Row &r,int offset){
 
 class AirSeaReplay:public gz::sim::GuiSystem {
  std::string directory;std::vector<Row> rows;size_t index=0;unsigned settle=0;
+ std::vector<gz::math::Quaterniond> mounts;
  bool both=false,opened=false,done=false;double phase=0,lastTime=-1;
+ double onboardHfov=.8726646259971648;
  gz::rendering::CameraPtr camera;QProcess *mainEncoder=nullptr,*onboardEncoder=nullptr;
  std::ofstream stamps;
  bool start(QProcess *&p,const std::string &name){
@@ -62,11 +64,18 @@ class AirSeaReplay:public gz::sim::GuiSystem {
  void LoadConfig(const tinyxml2::XMLElement *e)override{
   directory=e->FirstChildElement("directory")->GetText();
   both=std::string(e->FirstChildElement("both_views")->GetText())=="true";
+  if(auto x=e->FirstChildElement("onboard_hfov_rad"))onboardHfov=std::stod(x->GetText());
   std::ifstream file(directory+"/timeline.csv");std::string line;std::getline(file,line);
   while(std::getline(file,line)){
    std::stringstream in(line);std::string field;Row r{};int j=0;
    while(std::getline(in,field,',')&&j<19)r[j++]=std::stod(field);
    if(j==19)rows.push_back(r);
+  }
+  std::ifstream mountFile(directory+"/camera_mount.csv");std::getline(mountFile,line);
+  while(std::getline(mountFile,line)){
+   std::stringstream in(line);std::string field;std::array<double,4> q{};int j=0;
+   while(std::getline(in,field,',')&&j<4)q[j++]=std::stod(field);
+   if(j==4)mounts.emplace_back(q[0],q[1],q[2],q[3]);
   }
   gz::gui::App()->findChild<gz::gui::MainWindow *>()->installEventFilter(this);
  }
@@ -103,7 +112,8 @@ class AirSeaReplay:public gz::sim::GuiSystem {
    if(blur&&blur->Material())blur->Material()->SetTransparency(r[18]>.05?.86:1.0);
   }
   auto capture=[&](int view,QProcess *encoder){
-   if(view==1){camera->SetWorldPosition(p.Pos()+p.Rot()*gz::math::Vector3d(0,0,-.035));camera->SetWorldRotation(p.Rot()*gz::math::Quaterniond(0,Pi/2,0));}
+   camera->SetHFOV(view==1?onboardHfov:.8726646259971648);
+   if(view==1){camera->SetWorldPosition(p.Pos()+p.Rot()*gz::math::Vector3d(0,0,-.035));camera->SetWorldRotation(p.Rot()*(mounts.size()==rows.size()?mounts[index]:gz::math::Quaterniond(0,Pi/2,0)));}
    else{
     gz::math::Quaterniond heading(0,0,p.Rot().Yaw());
     auto eye=p.Pos()+heading*gz::math::Vector3d(-4.5,-5.5,2.3);auto d=p.Pos()-eye;

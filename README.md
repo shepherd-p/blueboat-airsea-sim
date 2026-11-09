@@ -16,6 +16,21 @@ generic; this is not a calibrated EDF or jet aircraft model. The earlier
 
 **Start here:** [fixed-wing setup, mission, evidence and model limits](docs/AIRSEA_NEXT_PHASE.md).
 
+The [camera capture correction](docs/CAMERA_CAPTURE_20261110.md) replaces the
+brief fixed-downward view with an image-directed virtual gimbal and 30 degree
+optics. The live display exposes the onboard camera, and a camera-first
+video export links original sensor images, same-frame zoom, current ENU
+estimates and the flown path. The independent validator checks sustained
+detections and reconstructs gimbal pointing from prior images.
+
+The 2026-11-10 full mission passed all 29 checks, with 64 original image
+fixes, sustained detection intervals of 2.772 / 2.604 s, and 3D position
+error P95 of 0.924 m. [Current camera validation](docs/evidence/camera_20261110/validation.json)
+and [video provenance](docs/evidence/camera_20261110/camera_video_checks.json)
+are included. The earlier 2026-11-08 evidence below is retained as history.
+
+![Original onboard boat capture and synchronized image position](docs/evidence/camera_20261110/boat_camera_preview.jpg)
+
 The fresh EDF-visual run on 2026-11-08 passed all 25 independent checks:
 autonomous runway takeoff, two image survey passes, image-based second-pass
 waypoint update and autonomous landing/stop/disarm. Image position error P95

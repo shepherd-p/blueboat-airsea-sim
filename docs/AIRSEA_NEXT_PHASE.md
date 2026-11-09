@@ -3,7 +3,7 @@
 This extends the public BlueBoat project with an original MIT-licensed
 Coastal EDF UAV visual, 1.15 m long and 1.6 m in span, an enclosed
 propulsion duct with no exposed propeller, a 600 x 18 m coastal runway, real
-ArduPlane AUTO missions and a calibrated downward airborne camera.
+ArduPlane AUTO missions and a calibrated gimballed airborne camera.
 The environment is the existing reproducible **Sea State 1** case
 (Hm0=0.05 m, Tp=2 s, 32 JONSWAP components, 2 m/s wind, current).
 
@@ -54,7 +54,9 @@ Gazebo separately simulates boat six-DOF/waves/wind/current; ArduRover
 The aircraft takes off from rest, flies survey waypoints, detects AprilTag
 ID0 in **native rendered images**, and solves IPPE-square PnP using its
 known 0.432 m black border. Ownship world pose comes from MAVLink EKF
-navigation and the fixed camera mount. Boat truth is logged only for
+navigation and the per-frame logged gimbal mount rotation. The gimbal first
+aims at the planned search area, then uses past image estimates; see
+[the camera capture correction](CAMERA_CAPTURE_20261110.md). Boat truth is logged only for
 independent error evaluation and never enters detection, estimation or
 waypoint updates. A successful first-pass image track updates the second
 survey waypoint through MAVLink mission partial-write. The existing

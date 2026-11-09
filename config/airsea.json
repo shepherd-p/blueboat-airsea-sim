@@ -4,7 +4,7 @@
   "aircraft": {"length_m": 1.15, "wingspan_m": 1.6, "mass_kg": 2.0, "wing_area_m2": 0.45, "visual_model": "Coastal EDF UAV, enclosed fan, no exposed propeller", "visual_license": "MIT"},
   "runway": {"x_min_m": -100, "x_max_m": 500, "center_y_m": 0, "width_m": 18},
   "boat_initial_enu_m": [300, 170, 0.01116959],
-  "camera": {"width": 1920, "height": 1080, "hfov_rad": 0.8726646259971648, "rate_hz": 12, "black_border_m": 0.432},
+  "camera": {"width": 1920, "height": 1080, "hfov_rad": 0.5235987755982988, "rate_hz": 12, "black_border_m": 0.432, "mount": "three-axis virtual gimbal, north-up", "search_point_enu_m": [300, 175, 0.16], "pointing": "planned search point followed by past image estimates; no boat truth"},
   "mission": [
     {"name": "Home", "command": 16, "enu_m": [0, 0, 0]},
     {"name": "Autonomous runway takeoff", "command": 22, "enu_m": [250, 0, 35], "param1": 12},

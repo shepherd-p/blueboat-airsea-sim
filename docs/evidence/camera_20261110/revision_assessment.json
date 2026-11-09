@@ -1,0 +1,105 @@
+{
+  "baseline": {
+    "sample_count": 746,
+    "pitch_rate_p95_abs_deg_s": 61.074608059308645,
+    "pitch_high_frequency_rms_deg": 2.112865235623011,
+    "roll_high_frequency_rms_deg": 0.30145327458439314,
+    "assessment_window": "Search legs 3/6, east 260..390 m, altitude above 10 m; no smoothing of flight or rendered attitude",
+    "high_frequency_definition": "Raw attitude minus centered 0.5 s moving mean; diagnostic, not a certified frequency-domain standard"
+  },
+  "revised": {
+    "sample_count": 730,
+    "pitch_rate_p95_abs_deg_s": 1.5543686080434824,
+    "pitch_high_frequency_rms_deg": 0.011175429041438333,
+    "roll_high_frequency_rms_deg": 0.011368257180555426,
+    "assessment_window": "Search legs 3/6, east 260..390 m, altitude above 10 m; no smoothing of flight or rendered attitude",
+    "high_frequency_definition": "Raw attitude minus centered 0.5 s moving mean; diagnostic, not a certified frequency-domain standard"
+  },
+  "pitch_high_frequency_reduction_percent": 99.47107705437053,
+  "image_localization": {
+    "detections": 64,
+    "median_3d_error_m": 0.5766869097749951,
+    "p95_3d_error_m": 0.9239749294137953,
+    "reference": "AprilTag black-border center fixed to boat; ENU origin is runway home",
+    "truth_used_in_estimator": false
+  },
+  "waypoint_hits": [
+    {
+      "seq": 1,
+      "name": "Autonomous runway takeoff",
+      "minimum_horizontal_distance_m": null,
+      "acceptance": "NAV_TAKEOFF completes on heading/altitude; its XY is not a fly-through waypoint"
+    },
+    {
+      "seq": 2,
+      "name": "Climb and turn toward search area",
+      "minimum_horizontal_distance_m": 17.967475903892176,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 3,
+      "name": "Search pass westbound",
+      "minimum_horizontal_distance_m": 0.6308801324696971,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 4,
+      "name": "Search turnaround",
+      "minimum_horizontal_distance_m": 15.681260131873874,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 5,
+      "name": "Align second image survey pass",
+      "minimum_horizontal_distance_m": 1.9502586542469282,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 6,
+      "name": "Second search pass eastbound",
+      "minimum_horizontal_distance_m": 15.200810221177935,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 7,
+      "name": "Return circuit",
+      "minimum_horizontal_distance_m": 15.503678697189384,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 8,
+      "name": "Downwind runway circuit",
+      "minimum_horizontal_distance_m": 12.297164593967366,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 9,
+      "name": "Final approach",
+      "minimum_horizontal_distance_m": 17.602093527789304,
+      "acceptance": "ArduPlane fly-by transition, checked against mission events; finite turn radius applies"
+    },
+    {
+      "seq": 10,
+      "name": "Autonomous runway landing",
+      "minimum_horizontal_distance_m": null,
+      "acceptance": "NAV_LAND is a glide/flare target; do not interpret landing-point offset as waypoint miss"
+    }
+  ],
+  "search_corridor_cross_track_p95_m": 6.039979743271396,
+  "waypoint_update_from_images": {
+    "sim_s": 103.059,
+    "event": "image_based_waypoint_update_requested",
+    "seq": 6,
+    "east": 550,
+    "north": 172.75582136346114,
+    "alt": 25
+  },
+  "mission_validation_passed": true,
+  "checks": {
+    "no_exposed_propellers": true,
+    "pitch_high_frequency_rms_below_0_2deg": true,
+    "pitch_rate_p95_below_8deg_s": true,
+    "original_mission_checks_pass": true
+  },
+  "passed": true
+}
