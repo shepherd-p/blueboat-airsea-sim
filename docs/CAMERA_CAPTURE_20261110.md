@@ -1,5 +1,10 @@
 # Boat camera capture correction
 
+This report records the earlier 30 degree camera run with the public
+procedural boat. For the restored original BlueBoat, 24 degree optics,
+antenna occlusion correction and current evidence, see
+[the original-model revision](ORIGINAL_BOAT_RESTORED_20261110.md).
+
 The earlier fixed-downward camera gave accepted image fixes for just 0.672 s
 and 0.588 s on the two survey passes. The 72 s overview contained only six
 seconds of onboard view; most of those seconds showed empty sea. Its held

@@ -1,0 +1,46 @@
+{
+  "trial": "airsea_original_boat_20261110_02",
+  "accepted": false,
+  "status": "stopped after second survey",
+  "reason": "North-side original antenna crossed tag border; only 0.420 s continuous accepted fixes",
+  "camera_hfov_deg": 24,
+  "second_pass_lateral_north_offset_m": 25,
+  "second_pass_detected_frames": 3,
+  "detected_sensor_times": [
+    147.35,
+    147.686,
+    147.77
+  ],
+  "session": {
+    "status": "failed",
+    "error": "KeyboardInterrupt()",
+    "sea_state": 1,
+    "epoch_offset_s": 1.159166,
+    "normal_plane_arming": true,
+    "rover_armed": true,
+    "image_observations": 43,
+    "image_based_second_pass_replanned": true,
+    "aircraft_physics": "ArduPlane 4.6.3 native plane aerodynamic and ground-contact FDM; read-only JSON slave -> Gazebo rendering",
+    "boat_physics": "Gazebo 6DOF buoyancy, 32 JONSWAP waves, wind/current and ArduRover 4.7.2",
+    "estimator": "Native rendered pixels -> AprilTag ID0 -> IPPE PnP -> MAVLink EKF ownship navigation + calibrated mount -> ENU boat position; truth evaluation only",
+    "pilot": false,
+    "playback_rate_changes": [
+      {
+        "native_s": 85.889078,
+        "real_time_factor": 0.05
+      },
+      {
+        "native_s": 93.616578,
+        "real_time_factor": 0.8
+      },
+      {
+        "native_s": 144.054078,
+        "real_time_factor": 0.05
+      },
+      {
+        "native_s": 150.649078,
+        "real_time_factor": 0.8
+      }
+    ]
+  }
+}

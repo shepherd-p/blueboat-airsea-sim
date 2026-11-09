@@ -1,0 +1,22 @@
+{
+  "mode": "original_cad",
+  "original_boat_restored": true,
+  "sha256": {
+    "model_visuals.sdf": "e649fcd4346c5066c04b7a4cced95d5b177a656b71d8a8246c38fa06588f06ed",
+    "blueboat_body.stl": "5b15eabd85cc71e09e79a67f9f3f17df3d855c51d797973f34f389586aaadbb9",
+    "propeller_left.stl": "3679055d0315861defd9c327dd564460737ba4361df849c67bced349890b2de2",
+    "propeller_right.stl": "d916c205e98f02555bac72f84c640361adf558ca5eead4aa7f670ca8895e4494",
+    "rotors.json": "fc617aa36c3357a3754a096b3a163df8a93661460d27e4077ea3014f39add889"
+  },
+  "original_source_model_sha256": "f8c53754f0cccb9c8553e2304f3c96fe7f195171349a4164f95c0b11dcb76011",
+  "visual_names": [
+    "official_cad",
+    "propeller_left",
+    "propeller_right",
+    "propeller_sweep_left",
+    "propeller_sweep_right"
+  ],
+  "asset_directory": "boat_visual_assets",
+  "description": "Original BlueBoat CAD body and separate rotors; local assets excluded from public source",
+  "physical_model_and_marker_preserved": true
+}

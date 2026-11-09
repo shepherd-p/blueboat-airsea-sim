@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "encoded_samples": [
+    {
+      "frame": 15,
+      "sensor_index": 98,
+      "detected": false,
+      "same_frame_zoom_encoded_mae": 2.3489468917408565,
+      "clean_sensor_encoded_mae": 2.2815219907407407
+    },
+    {
+      "frame": 79,
+      "sensor_index": 124,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.4270532238794464,
+      "clean_sensor_encoded_mae": 2.133631204989712
+    },
+    {
+      "frame": 143,
+      "sensor_index": 189,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.510492542490461,
+      "clean_sensor_encoded_mae": 2.3651049704218106
+    },
+    {
+      "frame": 208,
+      "sensor_index": 94,
+      "detected": false,
+      "same_frame_zoom_encoded_mae": 2.049434905769453,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 272,
+      "sensor_index": 106,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.824117431687671,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 336,
+      "sensor_index": 119,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.350488495779859,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 401,
+      "sensor_index": 132,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.7294677612055342,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 465,
+      "sensor_index": 185,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.5103721046749143,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 529,
+      "sensor_index": 197,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.525171503449339,
+      "clean_sensor_encoded_mae": null
+    },
+    {
+      "frame": 594,
+      "sensor_index": 210,
+      "detected": true,
+      "same_frame_zoom_encoded_mae": 2.5718315219485874,
+      "clean_sensor_encoded_mae": null
+    }
+  ],
+  "every_video_frame_uses_past_or_current_original_image": true,
+  "current_fix_flags_match_sensor_log": true,
+  "source_hashes_checked": true
+}

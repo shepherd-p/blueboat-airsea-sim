@@ -27,3 +27,5 @@ eeprom.bin
 /h-spar-sim/ros2_ws/src/blueboat_description/models/*/meshes/water.dae
 # Local supervisor/reporting notes are outside the public source release.
 /docs/ISSUES_AIRSEA_CN.md
+/.local_assets/
+/config/boat_visual.local.json

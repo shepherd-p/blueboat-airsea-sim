@@ -1,5 +1,25 @@
 # Validation provenance
 
+## Original BlueBoat restored, 2026-11-10
+
+The restored original-model mission `airsea_original_boat_20261110_03`
+passed all 34 independent checks, including actual world visuals,
+original mesh hashes, full takeoff/landing and both image survey passes.
+It yielded 69 image fixes, with accepted intervals of 3.444 / 2.352 s
+and 3D tag-center position error P95 0.966 m. Raw survey-window pitch-rate
+P95 was 1.555 deg/s. [Validation](evidence/original_boat_20261110/validation.json)
+and [video checks](evidence/original_boat_20261110/encoded_video_checks.json)
+are included. [Corrected videos and source](https://github.com/shepherd-p/blueboat-airsea-sim/releases/tag/original-blueboat-2026-11-10)
+replace the earlier procedural-boat presentation.
+
+![Original boat: same-frame camera localization](evidence/original_boat_20261110/boat_camera_preview.jpg)
+
+The older fixed-wing reports below used the procedural boat appearance.
+Their flight results remain historical evidence; they do not establish
+original boat identity. The first restoration trial failed sustained
+second-pass vision; a north-side trial was stopped for antenna occlusion.
+Both trials are recorded beside the final original-model evidence.
+
 ## Stable EDF visual and explicit image localization, 2026-11-08
 
 Fresh run airsea_edf_stable_01 passed all 25 independent checks with the

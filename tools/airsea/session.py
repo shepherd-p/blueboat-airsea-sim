@@ -95,8 +95,10 @@ class Session:
             slope=float(np.clip(slope,-.4,.4))
             prediction=float(np.median(y[-5:])+35*slope)
             prediction=float(np.clip(prediction,135,220))
-            mission.update_waypoint(6,550,prediction,25)
-            mission.event('image_track_acquired',observations=len(self.estimates),predicted_second_pass_north=prediction,estimated_north_speed=slope)
+            offset=CONFIG['image_replanning']['second_pass_north_offset_m']
+            mission.update_waypoint(6,550,prediction+offset,CONFIG['mission'][6]['enu_m'][2])
+            mission.event('image_track_acquired',observations=len(self.estimates),predicted_boat_north=prediction,
+                          second_pass_north=prediction+offset,lateral_offset_m=offset,estimated_north_speed=slope)
             self.updated=True
         if self.rover:self.rover_tick(mission)
         # Slow only camera survey passes. This affects wall-clock runtime,

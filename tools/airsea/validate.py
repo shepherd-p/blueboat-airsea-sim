@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import subprocess
+import xml.etree.ElementTree as ET
 
 import cv2
 import numpy as np
@@ -47,6 +48,25 @@ def validate(out,pilot=False):
         'archived_camera_frame_set':len(rows)==len(list((out/'onboard_frames').glob('*.jpg'))),
         'camera_follows_aircraft':np.ptp([float(r['plane_x']) for r in rows])>150 and np.ptp([float(r['plane_z']) for r in rows])>20,
     }
+    boat_visual_path=out/'boat_visual_manifest.json'
+    if boat_visual_path.exists():
+        visual=json.loads(boat_visual_path.read_text());tree=ET.parse(out/'world.sdf')
+        body=tree.find("world/model[@name='blueboat']/link[@name='base_link']")
+        checks['boat_visual_selection_recorded']=visual['mode'] in ('original_cad','procedural')
+        if visual['mode']=='original_cad':
+            checks['original_boat_mesh_hashes_match']=all(hashlib.sha256((out/'boat_visual_assets'/name).read_bytes()).hexdigest()==digest for name,digest in visual['sha256'].items())
+            names={v.get('name') for v in body.findall('visual')}
+            checks['original_boat_present_without_fallback_hulls']='official_cad' in names and not {'port_hull','starboard_hull'}&names
+            checks['original_boat_propellers_and_marker_present']={'propeller_left','propeller_right','landing_apriltag_0','proposed_landing_panel'}.issubset(names)
+            original=ET.parse(out/'boat_visual_assets/model_visuals.sdf').find('model/link')
+            def signature(element):return [element.tag,element.attrib,(element.text or '').strip(),[signature(c) for c in element]]
+            visual_match=True
+            for old in original.findall('visual'):
+                current=body.find(f"visual[@name='{old.get('name')}']")
+                for uri in old.findall('.//mesh/uri'):
+                    uri.text=str(out/'boat_visual_assets'/Path(uri.text).name)
+                visual_match &= current is not None and signature(old)==signature(current)
+            checks['rendered_boat_visuals_match_imported_original']=visual_match
     if not pilot:
         checks.update({
             'all_mission_phases':set(range(1,len(cfg['mission']))).issubset({e['seq'] for e in events if e['event']=='mission_current'}),

@@ -13,6 +13,7 @@ from generate_model import element, box, save
 from generate_environment import dense_water
 from sea_states import make_case
 from airframe import aircraft
+from boat_visual import apply as apply_boat_visual,selection as boat_selection
 
 CONFIG=json.loads((ROOT/'config/airsea.json').read_text())
 
@@ -30,10 +31,12 @@ def solid(world,name,xyz,size,color):
 
 def prepare(out,rtf=.6):
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=True)
+    selected_boat=boat_selection()
     path=make_case(out,1,True,rtf,9062)
     tree=ET.parse(path);world=tree.getroot().find('world');world.set('name','airsea')
     boat=world.find("model[@name='blueboat']")
     boat.find('pose').text=' '.join(map(str,[*CONFIG['boat_initial_enu_m'],0,0,0]))
+    apply_boat_visual(boat,out,selected_boat)
     ocean=world.find("model[@name='ocean_surface']")
     # Absolute ENU mesh coordinates keep CPU and GLSL wave phases aligned.
     dense_water(out/'water_near.dae',size=120,step=.25,center=(325,180))

@@ -16,20 +16,41 @@ generic; this is not a calibrated EDF or jet aircraft model. The earlier
 
 **Start here:** [fixed-wing setup, mission, evidence and model limits](docs/AIRSEA_NEXT_PHASE.md).
 
-The [camera capture correction](docs/CAMERA_CAPTURE_20261110.md) replaces the
-brief fixed-downward view with an image-directed virtual gimbal and 30 degree
-optics. The live display exposes the onboard camera, and a camera-first
+For the user's existing detailed BlueBoat model, use the
+[original-model import and verification](docs/ORIGINAL_BOAT_RESTORED_20261110.md).
+Public checkouts contain the procedural boat. Local demonstrations with
+the imported CAD select and verify that original model explicitly; an
+asset failure stops the run instead of substituting a different boat.
+
+![Restored original BlueBoat in Gazebo](docs/evidence/original_boat_20261110/boat_restored_preview.jpg)
+
+The [camera capture workflow](docs/CAMERA_CAPTURE_20261110.md) replaces the
+brief fixed-downward view with an image-directed virtual gimbal. The restored
+original-model revision uses 24 degree optics and a lateral second survey
+corridor to reduce antenna occlusion. The live display exposes the onboard camera, and a camera-first
 video export links original sensor images, same-frame zoom, current ENU
 estimates and the flown path. The independent validator checks sustained
 detections and reconstructs gimbal pointing from prior images.
 
-The 2026-11-10 full mission passed all 29 checks, with 64 original image
+The restored original-model mission `airsea_original_boat_20261110_03`
+passed all 34 independent checks, including actual world visuals,
+original mesh hashes, full takeoff/landing and both image survey passes.
+It yielded 69 image fixes, with accepted intervals of 3.444 / 2.352 s
+and 3D tag-center position error P95 0.966 m. Raw survey-window pitch-rate
+P95 was 1.555 deg/s. [Validation](docs/evidence/original_boat_20261110/validation.json)
+and [video checks](docs/evidence/original_boat_20261110/encoded_video_checks.json)
+are included. [Corrected videos and source](https://github.com/shepherd-p/blueboat-airsea-sim/releases/tag/original-blueboat-2026-11-10)
+replace the earlier procedural-boat presentation.
+
+![Original boat: same-frame camera localization](docs/evidence/original_boat_20261110/boat_camera_preview.jpg)
+
+The earlier procedural-boat mission on 2026-11-10 passed 29 checks, with 64 image
 fixes, sustained detection intervals of 2.772 / 2.604 s, and 3D position
-error P95 of 0.924 m. [Current camera validation](docs/evidence/camera_20261110/validation.json)
+error P95 of 0.924 m. [Historical camera validation](docs/evidence/camera_20261110/validation.json)
 and [video provenance](docs/evidence/camera_20261110/camera_video_checks.json)
 are included. The earlier 2026-11-08 evidence below is retained as history.
 
-![Original onboard boat capture and synchronized image position](docs/evidence/camera_20261110/boat_camera_preview.jpg)
+![Earlier procedural-boat camera evidence; retained as history](docs/evidence/camera_20261110/boat_camera_preview.jpg)
 
 The fresh EDF-visual run on 2026-11-08 passed all 25 independent checks:
 autonomous runway takeoff, two image survey passes, image-based second-pass
