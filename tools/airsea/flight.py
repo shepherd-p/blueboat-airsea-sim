@@ -82,8 +82,9 @@ class NativeFDM:
 
 
 class PlaneMission:
-    def __init__(self,out,port=5880):
+    def __init__(self,out,port=5880,config=None):
         self.out=Path(out)
+        self.config=CONFIG if config is None else config
         self.m=mavutil.mavlink_connection(f'tcp:127.0.0.1:{port}',source_system=255,retries=50)
         if self.m.wait_heartbeat(timeout=45) is None:
             raise TimeoutError('No ArduPlane heartbeat; inspect arduplane.log')
@@ -122,7 +123,7 @@ class PlaneMission:
 
     def upload(self):
         self.rc()
-        items=CONFIG['mission']
+        items=self.config['mission']
         self.m.mav.mission_clear_all_send(self.m.target_system,self.m.target_component)
         time.sleep(.1)
         self.m.mav.mission_count_send(self.m.target_system,self.m.target_component,len(items))
@@ -142,7 +143,7 @@ class PlaneMission:
                 seq=msg.seq;item=items[seq];east,north,alt=item['enu_m'];lat,lon=gps(east,north)
                 self.m.mav.mission_item_int_send(self.m.target_system,self.m.target_component,seq,
                     mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT,item['command'],int(seq==0),1,
-                    item.get('param1',0),0,0,0,int(round(lat*1e7)),int(round(lon*1e7)),alt)
+                    item.get('param1',0),item.get('param2',0),item.get('param3',0),item.get('param4',0),int(round(lat*1e7)),int(round(lon*1e7)),alt)
                 sent.add(seq)
                 self.event('mission_item_sent',seq=seq)
             elif typ=='MISSION_ACK' and msg.type==0 and len(sent)==len(items):

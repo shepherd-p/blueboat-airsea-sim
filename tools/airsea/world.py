@@ -29,7 +29,8 @@ def solid(world,name,xyz,size,color):
     return model
 
 
-def prepare(out,rtf=.6):
+def prepare(out,rtf=.6,config=None):
+    CONFIG=config if config is not None else globals()['CONFIG']
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=True)
     selected_boat=boat_selection()
     path=make_case(out,1,True,rtf,9062)

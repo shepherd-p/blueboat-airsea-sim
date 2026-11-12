@@ -1,5 +1,21 @@
 # BlueBoat air-sea simulation for Gazebo Harmonic
 
+The [mutual observation and classical speed coordination extension](docs/COOPERATIVE_20261112.md)
+adds a boat upward camera, aircraft belly AprilTag, shape/tag filtering,
+bounded feedback speed changes for both SITL vehicles and a live dual-camera
+telemetry display. It retains the existing takeoff and runway recovery.
+Run `./RunCooperative.ps1` in PowerShell after the setup/import steps, or
+`bash tools/run_cooperative_wsl.sh --out "$PWD/results/cooperative_run_01"`
+on Ubuntu/WSL. Each new trial requires its own independent validation.
+
+The final 70 s cooperative run passed 38/38 checks, with fresh image coverage
+99.99% (aircraft to boat) and 98.88% (boat to aircraft). Position error P95
+was 1.05 / 5.24 m; aircraft target velocity remains coarser at 5.92 m/s P95.
+See [measured evidence](docs/evidence/cooperative_20261112/validation_summary.json)
+and [physical flight paths](docs/evidence/cooperative_20261112/Flight_Paths.png).
+
+![Mutual shape and AprilTag observation from both native cameras](docs/evidence/cooperative_20261112/Mutual_Observation_Preview.jpg)
+
 Fixed-wing coastal search, image-based boat localization and autonomous
 runway recovery in Sea State 1, built on the BlueBoat simulation below.
 The aircraft uses real ArduPlane 4.6.3 native aerodynamic/ground-contact

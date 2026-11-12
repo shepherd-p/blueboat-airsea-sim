@@ -1,7 +1,7 @@
 # Status and future work
 
 The fixed-wing phase is implemented in the representative Sea State 1 scene:
-a PX4 Believer visual scaled to 0.961 m length and 1.6 m span,
+an original MIT Coastal EDF visual with no exposed propellers,
 a coastal runway, autonomous takeoff,
 waypoint flight, image-based boat localization, a second search pass updated
 from image estimates, and autonomous runway recovery. See
@@ -9,9 +9,15 @@ from image estimates, and autonomous runway recovery. See
 evidence. Acceptance of a particular run requires its independent
 `validation.json` to pass.
 
-Future work includes Gazebo aircraft terrain/water collision coupling,
-calibrated airframe and vessel parameters, noisy/blurred camera images,
-occlusion recovery and continuous target tracking. The current aircraft uses
-ArduPlane's native flat-ground aerodynamic FDM and intermittent two-pass
-observations. Landing on the boat and real-world validation remain outside
-the demonstrated capability.
+The [mutual-observation extension](COOPERATIVE_20261112.md) implements a
+classical feedback baseline for both vehicle speeds, an upward boat camera,
+shape/tag relative position and velocity estimates, and dual-view telemetry.
+Acquisition/reacquisition uses communicated ownship EKF positions, and
+aircraft attitude is a declared silhouette-scale prior. Sustained visual
+coverage is evaluated over a separate coordinated cruise interval.
+
+Future work includes independent repeated trials, fixed-speed and
+shape/tag-only comparisons, clouds/distractors/noisy camera images,
+general detectors, calibrated airframe/vessel parameters, Gazebo aircraft
+terrain/water collision coupling, and hardware validation. Native ArduPlane
+flat-ground FDM remains generic. Boat landing and RL are not demonstrated.
