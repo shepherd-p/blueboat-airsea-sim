@@ -13,7 +13,7 @@ from world import solid
 from generate_model import element,save
 
 
-def run(out):
+def run(out,skin_tags=False):
     out=out.resolve();out.mkdir(parents=True,exist_ok=False)
     root=ET.Element('sdf',version='1.9');world=element(root,'world',name='aircraft_inspection')
     element(world,'gravity','0 0 -9.80665')
@@ -22,14 +22,20 @@ def run(out):
         element(world,'plugin',filename='gz-sim-'+file+'-system',name='gz::sim::systems::'+name)
     scene=element(world,'scene');element(scene,'ambient','.65 .65 .65 1');element(scene,'background','.68 .77 .84 1');element(scene,'grid','false');element(scene,'shadows','true')
     sun=element(world,'light',name='sun',type='directional');element(sun,'pose','0 0 10 0 0 0');element(sun,'diffuse','1 .97 .93 1');element(sun,'direction','-.3 -.5 -1');element(sun,'cast_shadows','true')
-    solid(world,'apron',[0,0,-.025],[40,40,.05],'.23 .26 .29 1')
-    aircraft(world,out)
+    if not skin_tags:solid(world,'apron',[0,0,-.025],[40,40,.05],'.23 .26 .29 1')
+    model=aircraft(world,out)
+    if skin_tags:
+        import json
+        from skin_tags import apply
+        cfg=json.loads((ROOT/'config/cooperative.json').read_text())
+        apply(model.find('link'),out,cfg)
     original=ET.parse(ROOT/'h-spar-sim/ros2_ws/src/blueboat_description/worlds/blueboat_ocean_sitl.sdf').find('world/gui')
     gui=copy.deepcopy(original)
     for plugin in list(gui):
         if plugin.get('filename') not in ('MinimalScene','GzSceneManager'):gui.remove(plugin)
     gui.find("plugin[@filename='MinimalScene']/camera_pose").text='1.6 -2.1 1.05 0 .3 2.3'
     plugin=element(gui,'plugin',filename='AirSeaAircraftPreview',name='Aircraft Preview');element(plugin,'directory',str(out))
+    if skin_tags:element(plugin,'underside','true')
     world.append(gui);path=out/'inspection.sdf';save(root,path)
     env=os.environ.copy();env['GZ_PARTITION']='airsea_aircraft_inspection'
     env['GZ_GUI_PLUGIN_PATH']=str(ROOT/'build/airsea_native')+':'+env.get('GZ_GUI_PLUGIN_PATH','')
@@ -51,4 +57,4 @@ def run(out):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);run(p.parse_args().out)
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--skin-tags',action='store_true');a=p.parse_args();run(a.out,a.skin_tags)

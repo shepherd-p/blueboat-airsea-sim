@@ -1,0 +1,126 @@
+{
+  "installation": "Paint texture in existing main-wing underside UVs; zero added geometry, standoff, collision, mass or plate",
+  "geometry_unchanged": true,
+  "markers": [
+    {
+      "id": 1,
+      "wing": "left",
+      "center_xy_body_m": [
+        -0.105,
+        0.28
+      ],
+      "corners_body_m": [
+        [
+          -0.0049999999999999906,
+          0.38,
+          0.052502180627252606
+        ],
+        [
+          -0.20500000000000002,
+          0.38,
+          0.06131936538952802
+        ],
+        [
+          -0.20500000000000002,
+          0.18000000000000002,
+          0.05455572811845365
+        ],
+        [
+          -0.0049999999999999906,
+          0.18000000000000002,
+          0.04328222615337161
+        ]
+      ],
+      "black_border_m": 0.2,
+      "quiet_zone_outer_m": 0.25,
+      "quiet_corners_body_m": [
+        [
+          -0.22999999999999998,
+          0.405,
+          0.06384217137752492
+        ],
+        [
+          0.020000000000000004,
+          0.405,
+          0.055842349387900475
+        ],
+        [
+          0.020000000000000004,
+          0.15500000000000003,
+          0.04142595448499631
+        ],
+        [
+          -0.22999999999999998,
+          0.15500000000000003,
+          0.05547679969197107
+        ]
+      ],
+      "corner_nonplanarity_m": 0.0006131562745619878,
+      "geometry_before_sha256": "54004c443d205bc04617f32ac5db8c0bcbcb495c197181b38734cb0dccbcf974",
+      "geometry_after_sha256": "54004c443d205bc04617f32ac5db8c0bcbcb495c197181b38734cb0dccbcf974",
+      "texture_sha256": "49ba68c13a25008e750d648972a33dc864bdb17331953587f8e4fbfd35b74d76",
+      "mesh_sha256": "8f301bd72b4ffe9094db0a89054cf8d0fece4460815c9a27d979c162762e46d9"
+    },
+    {
+      "id": 2,
+      "wing": "right",
+      "center_xy_body_m": [
+        -0.105,
+        -0.28
+      ],
+      "corners_body_m": [
+        [
+          -0.0049999999999999906,
+          -0.18000000000000002,
+          0.04328222615337161
+        ],
+        [
+          -0.20500000000000002,
+          -0.18000000000000002,
+          0.054555728118453634
+        ],
+        [
+          -0.20500000000000002,
+          -0.38,
+          0.06131936538952802
+        ],
+        [
+          -0.0049999999999999906,
+          -0.38,
+          0.052502180627252606
+        ]
+      ],
+      "black_border_m": 0.2,
+      "quiet_zone_outer_m": 0.25,
+      "quiet_corners_body_m": [
+        [
+          -0.22999999999999998,
+          -0.15500000000000003,
+          0.055476799691971064
+        ],
+        [
+          0.020000000000000004,
+          -0.15500000000000003,
+          0.041425954484996315
+        ],
+        [
+          0.020000000000000004,
+          -0.405,
+          0.05584234938790048
+        ],
+        [
+          -0.22999999999999998,
+          -0.405,
+          0.06384217137752493
+        ]
+      ],
+      "corner_nonplanarity_m": 0.0006131562745619792,
+      "geometry_before_sha256": "ea816f56056f1809b75c66fd94aaecf573a96d2bdbfbcae024b22d3b6f7cfe84",
+      "geometry_after_sha256": "ea816f56056f1809b75c66fd94aaecf573a96d2bdbfbcae024b22d3b6f7cfe84",
+      "texture_sha256": "38d1dd61844ed24cd1885fcb2bab91458c2231e4fb9ae0d6908cb318d402475e",
+      "mesh_sha256": "a4256731918695b8ecd84df3ad5a5a4a5ef6d7bac68cc8e4644621469f70bc42"
+    }
+  ],
+  "pose_method": "Known-attitude translation fit to calibrated nonplanar skin corners; aircraft body origin output",
+  "limitations": "Conceptual smooth paint/film installation. Adhesion, surface finish, structural clearance and aerodynamic effects require real airframe engineering; generic SITL is not CFD."
+}

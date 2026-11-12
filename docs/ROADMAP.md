@@ -16,6 +16,12 @@ Acquisition/reacquisition uses communicated ownship EKF positions, and
 aircraft attitude is a declared silhouette-scale prior. Sustained visual
 coverage is evaluated over a separate coordinated cruise interval.
 
+The [November 13 skin-tag correction](SKIN_TAGS_20261113.md) replaces the
+aircraft's standalone plate with two markings on the existing wing skin.
+The calibrated nonplanar corners and communicated IMU attitude estimate
+the aircraft body origin. Paint/film aerodynamic and hardware effects
+remain unvalidated by the generic FDM.
+
 Future work includes independent repeated trials, fixed-speed and
 shape/tag-only comparisons, clouds/distractors/noisy camera images,
 general detectors, calibrated airframe/vessel parameters, Gazebo aircraft

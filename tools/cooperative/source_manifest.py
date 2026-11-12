@@ -1,6 +1,6 @@
 """Regenerate public source hashes from normalized staged Git blobs."""
 from pathlib import Path
-import hashlib,json,subprocess
+import datetime,hashlib,json,subprocess
 
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -19,7 +19,7 @@ def generate():
         stop=blobs.index(b'\n',offset);header=blobs[offset:stop].split();assert header[:2]==[oid,b'blob']
         size=int(header[2]);offset=stop+1;content=blobs[offset:offset+size];offset+=size+1
         hashes[name]=hashlib.sha256(content).hexdigest()
-    report=dict(date='2026-11-12',scope='Public source for mutual shape/AprilTag vision and classical speed coordination, with original MIT EDF geometry and attributed Apache-2.0 Believer assets. Excludes manufacturer CAD, private correspondence, firmware/runtime binaries, raw logs and videos.',hash_basis='Normalized Git index blobs; excludes this manifest itself.',sha256=hashes)
+    report=dict(date=datetime.date.today().isoformat(),scope='Public source for conformal wing-skin AprilTags, mutual vision and classical speed coordination, with original MIT EDF geometry and attributed Apache-2.0 Believer assets. Excludes manufacturer CAD, private correspondence, firmware/runtime binaries, raw logs and videos.',hash_basis='Normalized Git index blobs; excludes this manifest itself.',sha256=hashes)
     (ROOT/'SOURCE_MANIFEST.json').write_text(json.dumps(report,indent=2)+'\n')
     print('Public source manifest:',len(hashes),'files')
 

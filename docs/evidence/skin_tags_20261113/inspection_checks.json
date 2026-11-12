@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "actual_render_detections": [
+    {
+      "id": 1,
+      "detected": true,
+      "body_origin_error_m": 0.011349570577297283,
+      "reprojection_rms_px": 0.062116876763705246
+    },
+    {
+      "id": 2,
+      "detected": true,
+      "body_origin_error_m": 0.011263288017572677,
+      "reprojection_rms_px": 0.05095933991364846
+    }
+  ],
+  "historical_shape_comparison": {
+    "left": {
+      "same_vertices": true,
+      "same_geometric_triangles": true
+    },
+    "right": {
+      "same_vertices": true,
+      "same_geometric_triangles": true
+    }
+  },
+  "note": "Unmodified Gazebo pixels, known inspection camera only. This close-up check is separate from the flight mission."
+}

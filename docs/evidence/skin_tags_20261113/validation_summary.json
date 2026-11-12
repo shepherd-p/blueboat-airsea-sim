@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "checks": {
+    "full_mission_completed": true,
+    "sea_state_1": true,
+    "ordinary_plane_arming": true,
+    "rover_armed": true,
+    "coordinated_duration_at_least_60s": true,
+    "original_images_independently_reproduced": true,
+    "estimator_truth_inputs_absent": true,
+    "independent_camera_pairs": true,
+    "all_mission_phases": true,
+    "autonomous_disarm": true,
+    "both_camera_feeds_archived": true,
+    "rendered_camera_calibration_matches_estimator": true,
+    "source_snapshot_hashes_match": true,
+    "estimator_code_matches_recorded": true,
+    "original_boat_assets_exact": true,
+    "actual_world_original_boat": true,
+    "actual_world_upward_camera_and_aircraft_tag": true,
+    "no_separate_aircraft_tag_board": true,
+    "paint_preserves_original_wing_vertices_and_triangles": true,
+    "whole_marker_quiet_zone_fits_existing_skin": true,
+    "nonplanar_skin_corner_calibration_matches_estimator": true,
+    "wing_texture_and_mesh_hashes_match": true,
+    "skin_generator_matches_recorded": true,
+    "world_hash_matches": true,
+    "takeoff_and_touchdown_on_runway": true,
+    "touchdown_sink_below_2mps": true,
+    "stopped_on_runway": true,
+    "air_visual_coverage_at_least_95_percent": true,
+    "air_no_unmeasured_gap_over_1s": true,
+    "air_tag_observed": true,
+    "boat_visual_coverage_at_least_95_percent": true,
+    "boat_no_unmeasured_gap_over_1s": true,
+    "boat_tag_observed": true,
+    "long_range_shape_continues_without_tag": true,
+    "air_to_boat_position_p95_below_5m": true,
+    "boat_to_aircraft_position_p95_below_20m": true,
+    "boat_to_aircraft_velocity_p95_below_12mps": true,
+    "rover_speed_limit_matches_supervisor": true,
+    "speed_commands_bounded": true,
+    "both_commanded_speeds_adjust": true,
+    "both_physical_speeds_respond": true,
+    "boat_speed_adjusts_after_initial_acceleration": true,
+    "boat_speed_response_matches_independent_physics": true,
+    "controls_use_past_images": true
+  },
+  "cooperation_duration_s": 70.00000000000001,
+  "observation": {
+    "air": {
+      "original_frames": 804,
+      "measurement_frames": 804,
+      "tag_frames": 29,
+      "visual_measurement_time_fraction": 0.9997714285714285,
+      "shape_time_fraction": 0.9997714285714285,
+      "tag_time_fraction": 0.0358,
+      "maximum_measurement_age_s": 0.0,
+      "maximum_measurement_gap_s": 0.0940000000000083,
+      "actual_sensor_mean_hz": 11.487839771101573,
+      "maximum_sensor_gap_s": 0.0940000000000083,
+      "position_error_m": {
+        "median": 0.3318408680694898,
+        "p95": 1.1685782740409978,
+        "maximum": 3.5078980182514483
+      },
+      "velocity_error_mps": null,
+      "shape_only_frames": 775,
+      "shape_only_max_range_m": 104.57895013648302,
+      "tag_max_range_m": 54.890936736720256
+    },
+    "boat": {
+      "original_frames": 804,
+      "measurement_frames": 795,
+      "tag_frames": 28,
+      "visual_measurement_time_fraction": 0.9886285714285713,
+      "shape_time_fraction": 0.9886285714285717,
+      "tag_time_fraction": 0.034571428571428996,
+      "maximum_measurement_age_s": 0.26200000000000045,
+      "maximum_measurement_gap_s": 0.3500000000000085,
+      "actual_sensor_mean_hz": 11.487839771101573,
+      "maximum_sensor_gap_s": 0.0940000000000083,
+      "position_error_m": {
+        "median": 2.050451506747093,
+        "p95": 4.501638758600729,
+        "maximum": 5.609516833660239
+      },
+      "velocity_error_mps": {
+        "median": 3.189749121367455,
+        "p95": 6.006844883002506
+      },
+      "shape_only_frames": 767,
+      "shape_only_max_range_m": 104.36018581895412,
+      "tag_max_range_m": 55.70544430069457
+    }
+  },
+  "speed_commands_range_mps": {
+    "aircraft": [
+      14.020518261383877,
+      17.128385845750458
+    ],
+    "boat": [
+      0.4488689013267478,
+      1.2513048481888243
+    ]
+  },
+  "physical_speeds_range_mps": {
+    "aircraft": [
+      13.283355712890625,
+      18.348100662231445
+    ],
+    "boat": [
+      0.0316227766016838,
+      1.24
+    ]
+  },
+  "gazebo_boat_speed_range_mps": [
+    0.003999999999962256,
+    1.2501128909022583
+  ],
+  "boat_navigation_physics_speed_error_p95_mps": 0.030804821176837797,
+  "upward_EKF_reacquisition_cues_during_cooperation": 0,
+  "touchdown_sink_mps": 0.87337,
+  "limitations": "Restricted color/silhouette baseline, known geometry and communicated target IMU attitude; not a trained general detector. Upward acquisition/reacquisition uses communicated aircraft EKF, not truth. Shape range remains uncertain; ideal gimbals, images and generic FDM. Visual cruise acceptance is separate from takeoff/landing visibility. No RL or real-world validation."
+}

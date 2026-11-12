@@ -4,9 +4,13 @@ Truth is used only here to measure errors. Predictions and GNSS acquisition
 cues never count as successful visual detections or image measurements.
 """
 from pathlib import Path
-import argparse,csv,hashlib,json,sys,xml.etree.ElementTree as ET
+import argparse,csv,hashlib,json,sys,tempfile,xml.etree.ElementTree as ET
 import cv2,numpy as np
 from vision import Perception,rotation
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT/'tools'));sys.path.insert(0,str(ROOT/'tools/airsea'))
+from skin_tags import geometry,geometry_hash,surface_point,lower_faces
+from edf_airframe import wing
 
 
 def read(path):return [json.loads(x) for x in path.read_text().splitlines()]
@@ -64,7 +68,29 @@ def validate(run):
     world=ET.parse(run/'world.sdf');v=json.loads((run/'boat_visual_manifest.json').read_text());body=world.find("world/model[@name='blueboat']/link[@name='base_link']")
     checks['original_boat_assets_exact']=v['original_boat_restored'] and all(hashlib.sha256((run/'boat_visual_assets'/n).read_bytes()).hexdigest()==h for n,h in v['sha256'].items())
     checks['actual_world_original_boat']=body.find("visual[@name='official_cad']") is not None and body.find("visual[@name='port_hull']") is None
-    checks['actual_world_upward_camera_and_aircraft_tag']=body.find("visual[@name='upward_camera_housing']") is not None and world.find("world/model[@name='aircraft']/link/visual[@name='aircraft_apriltag_1']") is not None
+    aircraft=world.find("world/model[@name='aircraft']/link")
+    skin=json.loads((run/'aircraft_skin_tags.json').read_text())
+    checks['actual_world_upward_camera_and_aircraft_tag']=body.find("visual[@name='upward_camera_housing']") is not None and all(aircraft.find(f"visual[@name='edf_wing_{m['wing']}']/material/pbr/metal/albedo_map") is not None for m in skin['markers'])
+    checks['no_separate_aircraft_tag_board']=aircraft.find("visual[@name='aircraft_apriltag_1']") is None and not any('marker.dae' in (x.text or '') for x in aircraft.findall('.//geometry/mesh/uri'))
+    unchanged=True;fitted=True;calibrated=True;skin_hashes=True
+    with tempfile.TemporaryDirectory() as temp:
+        for marker in skin['markers']:
+            side=marker['wing'];path=run/'aircraft_meshes'/f'edf_wing_{side}.dae'
+            points,faces=geometry(path);reference=Path(temp)/f'{side}.dae';wing(reference,1 if side=='left' else -1)
+            reference_points,reference_faces=geometry(reference)
+            unchanged &= np.array_equal(points,reference_points) and np.array_equal(faces,reference_faces)
+            lower=faces[lower_faces(points,faces)]
+            cfg_marker=next(m for m in cfg['upward_camera']['aircraft_surface_tags'] if m['id']==marker['id'])
+            calibrated &= np.max(np.abs(np.array(marker['corners_body_m'])-cfg_marker['corners_body_m']))<1e-10
+            for p in marker['quiet_corners_body_m']+marker['corners_body_m']:
+                fitted &= np.linalg.norm(np.array(surface_point(*p[:2],points,lower))-p)<1e-9
+            calibrated &= marker['black_border_m']==cfg['upward_camera']['black_border_m']
+            skin_hashes &= hashlib.sha256(path.read_bytes()).hexdigest()==marker['mesh_sha256'] and hashlib.sha256(path.with_suffix('.png').read_bytes()).hexdigest()==marker['texture_sha256']
+    checks['paint_preserves_original_wing_vertices_and_triangles']=bool(unchanged)
+    checks['whole_marker_quiet_zone_fits_existing_skin']=bool(fitted)
+    checks['nonplanar_skin_corner_calibration_matches_estimator']=bool(calibrated)
+    checks['wing_texture_and_mesh_hashes_match']=bool(skin_hashes)
+    checks['skin_generator_matches_recorded']=all(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()==source_hashes[p] for p in ('tools/airsea/skin_tags.py','tools/airsea/edf_airframe.py'))
     checks['world_hash_matches']=hashlib.sha256((run/'world.sdf').read_bytes()).hexdigest()==json.loads((run/'input_hashes.json').read_text())['world_sdf_sha256']
     lift=np.where(pos[:,2]>2)[0][0];touch=np.where((np.arange(len(pos))>lift)&(pos[:,2]<=.101))[0][0]
     runway=cfg['runway']

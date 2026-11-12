@@ -1,5 +1,9 @@
 # Mutual observation and classical speed coordination
 
+This page preserves the November 12 baseline. Its aircraft tag board has
+been replaced by [wing-skin markings](SKIN_TAGS_20261113.md); historical
+images and metrics below do not describe the corrected installation.
+
 The accepted full run is `cooperative_20261112_06`: **38/38 independent
 checks passed**, including all 938 original camera pairs, normal arming,
 autonomous takeoff and runway landing/stop/disarm. Its 70.000 s coordinated

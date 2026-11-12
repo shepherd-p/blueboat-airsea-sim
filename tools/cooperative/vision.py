@@ -34,7 +34,35 @@ def projected_airframe_diameter(R,attitude,pixel,K):
     return float(np.sqrt(np.max(np.sum((projection[:,None]-projection[None,:])**2,axis=2))))
 
 
-def tags(image,K,size,tag_id):
+def known_attitude_translation(pixels,K,points,attitude):
+    """Position only: aircraft attitude is a declared communicated IMU prior.
+
+    Calibrated corners lie on the original curved skin. No target position,
+    planar-square assumption or target truth attitude enters this solve.
+    """
+    q=(attitude@np.asarray(points).T).T
+    normalized=(np.linalg.inv(K)@np.column_stack((pixels,np.ones(4))).T).T
+    A=[];b=[]
+    for (u,v,_),(x,y,z) in zip(normalized,q):
+        A.extend(([1,0,-u],[0,1,-v]));b.extend((u*z-x,v*z-y))
+    t=np.linalg.lstsq(A,b,rcond=None)[0]
+    # Refine in pixel space to weight corners consistently.
+    for _ in range(4):
+        p=q+t
+        if np.any(p[:,2]<=0):return None
+        proj=(K@p.T).T;proj=proj[:,:2]/proj[:,2,None]
+        jac=np.zeros((8,3))
+        jac[::2,0]=K[0,0]/p[:,2];jac[1::2,1]=K[1,1]/p[:,2]
+        jac[::2,2]=-K[0,0]*p[:,0]/p[:,2]**2;jac[1::2,2]=-K[1,1]*p[:,1]/p[:,2]**2
+        delta=np.linalg.lstsq(jac,(pixels-proj).ravel(),rcond=None)[0];t+=delta
+        if np.linalg.norm(delta)<1e-8:break
+    p=q+t
+    if np.any(p[:,2]<=0):return None
+    proj=(K@p.T).T;proj=proj[:,:2]/proj[:,2,None]
+    return t,float(np.sqrt(np.mean(np.sum((proj-pixels)**2,axis=1))))
+
+
+def tags(image,K,size,tag_id,object_points=None,object_rotation=None):
     params=cv2.aruco.DetectorParameters_create()
     params.cornerRefinementMethod=cv2.aruco.CORNER_REFINE_SUBPIX
     params.cornerRefinementWinSize=3
@@ -44,6 +72,11 @@ def tags(image,K,size,tag_id):
     pixels=corners[list(ids.flatten()).index(tag_id)].reshape(4,2)
     edge=np.linalg.norm(pixels-np.roll(pixels,-1,axis=0),axis=1)
     if edge.mean()<12 or edge.min()<8:return None
+    if object_points is not None:
+        if object_rotation is None:return None
+        result=known_attitude_translation(pixels,K,object_points,object_rotation)
+        if result is None or result[1]>=1.2:return None
+        return dict(translation=result[0],pixels=pixels,edge_px=float(edge.mean()),rms_px=result[1],tag_id=tag_id,reference='aircraft_body_origin')
     s=size/2;obj=np.array([[-s,s,0],[s,s,0],[s,-s,0],[-s,-s,0]],float)
     _,rvecs,tvecs,_=cv2.solvePnPGeneric(obj,pixels,K,None,flags=cv2.SOLVEPNP_IPPE_SQUARE)
     solutions=[]
@@ -138,7 +171,14 @@ class Perception:
             dt=t-old[0];gain=1-math.exp(-dt/.5)
             own_velocity=old[2]*(1-gain)+(origin-old[1])/dt*gain
         self.own_motion[kind]=(t,origin.copy(),own_velocity)
-        tag=tags(image,K,cfg['black_border_m'],0 if kind=='air' else 1)
+        if kind=='boat' and 'aircraft_surface_tags' in cfg:
+            attitude=meta.get('communicated_target_attitude_enu');found=[]
+            if attitude is not None:
+                for marker in cfg['aircraft_surface_tags']:
+                    result=tags(image,K,cfg['black_border_m'],marker['id'],marker['corners_body_m'],R.T@rotation(attitude))
+                    if result is not None:found.append(result)
+            tag=max(found,key=lambda r:r['edge_px'],default=None)
+        else:tag=tags(image,K,cfg['black_border_m'],0 if kind=='air' else 1)
         candidates=shapes(image,kind);silhouette=None
         for candidate in candidates:
             if kind=='air':
@@ -149,7 +189,12 @@ class Perception:
                 if not (8<distance<250 and .22<diameter_m<1.9):continue
                 prior=np.array(self.cfg['camera']['search_point_enu_m']) if track.x is None else track.x[:3]
                 age=0 if track.last_measurement is None else t-track.last_measurement
-                if np.linalg.norm(point[:2]-prior[:2])>(50 if track.x is None else max(5,2*age+3)):continue
+                # Long-range startup bearings can leave an uncertain velocity
+                # estimate. A fixed 5 m gate then rejects the real boat after
+                # a coast, despite large filter uncertainty. Use the predicted
+                # XY covariance as well as the target-motion envelope.
+                radius=50 if track.x is None else max(5,2*age+3,3*math.sqrt(max(np.linalg.eigvalsh(track.P[:2,:2]))))
+                if np.linalg.norm(point[:2]-prior[:2])>radius:continue
             silhouette=candidate;break
         source='prediction';z=None;cov=None;accepted=False
         if silhouette:
@@ -175,9 +220,8 @@ class Perception:
         if z is not None:accepted=track.update(t,z,cov)
         if tag:
             ztag=eye+R@tag['translation']
-            # Relative image estimate is the tag center. For the aircraft,
-            # 0.15 m offset to its origin is within the tag covariance; no
-            # target truth attitude is available to rotate that offset.
+            # Boat uses its deck-tag center; skin-corner solve for aircraft
+            # directly returns its body origin, removing the off-center tag.
             sigma=max(.25,float(np.linalg.norm(tag['translation']))*.012)
             tag_ok=track.update(t,ztag,np.eye(3)*sigma*sigma)
             if tag_ok:source='shape+tag' if accepted else 'tag';accepted=True

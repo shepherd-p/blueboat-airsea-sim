@@ -125,7 +125,9 @@ public:
    // Optical right/down/forward in Gazebo camera forward/left/up coordinates.
    auto rx=rotation*gz::math::Vector3d(0,-1,0),ry=rotation*gz::math::Vector3d(0,0,-1),rz=rotation*gz::math::Vector3d(1,0,0);
    meta<<",\"R_optical_to_enu\":["<<rx.X()<<','<<ry.X()<<','<<rz.X()<<','<<rx.Y()<<','<<ry.Y()<<','<<rz.Y()<<','<<rx.Z()<<','<<ry.Z()<<','<<rz.Z()<<']';
-   auto target=physical[1-k].Pos()+physical[1-k].Rot()*(k==0?gz::math::Vector3d(0,0,.1576):gz::math::Vector3d(.14,0,-.05));
+   // Upward estimates now refer to the aircraft body origin. Wing-skin
+   // marker offsets are removed using calibrated corners and shared IMU.
+   auto target=physical[1-k].Pos()+physical[1-k].Rot()*(k==0?gz::math::Vector3d(0,0,.1576):gz::math::Vector3d(0,0,0));
    meta<<",\"evaluation_target_only\":";vectorJSON(meta,target);meta<<'}';
   }
   meta<<"}\n";meta.flush();

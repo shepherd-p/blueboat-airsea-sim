@@ -2,13 +2,26 @@
 from pathlib import Path
 import json,unittest
 import cv2,numpy as np
-from vision import tags,shape,intrinsics,Perception,Track
+from vision import tags,shape,intrinsics,Perception,Track,known_attitude_translation,rotation
 from control import Coordinator
 
 CFG=json.loads((Path(__file__).resolve().parents[2]/'config/cooperative.json').read_text())
 
 
 class Behavior(unittest.TestCase):
+    def test_curved_off_center_skin_marker_recovers_body_origin(self):
+        K=intrinsics(1920,1080,.24434609527920614)
+        corners=np.array([[-.205,.38,.045],[-.005,.38,.052],[-.005,.18,.040],[-.205,.18,.050]])
+        q=np.array([.1,.99,0,0]);R=rotation(q/np.linalg.norm(q));translation=np.array([1.2,-.7,55.])
+        xyz=(R@corners.T).T+translation;projected=(K@xyz.T).T
+        pixels=projected[:,:2]/projected[:,2,None]
+        result=known_attitude_translation(pixels,K,corners,R)
+        np.testing.assert_allclose(result[0],translation,atol=1e-8)
+        self.assertLess(result[1],1e-8)
+        # Translating the installation must not silently translate aircraft CG.
+        result2=known_attitude_translation(pixels,K,corners+[.2,0,0],R)
+        self.assertGreater(np.linalg.norm(result2[0]-translation),.19)
+
     def test_blank_and_uniform_background_have_no_measurement(self):
         K=intrinsics(1280,720,.35)
         for color in ((128,128,128),(194,140,89),(140,110,90)):
@@ -52,6 +65,16 @@ class Behavior(unittest.TestCase):
         for y in (523,550):cv2.rectangle(im,(930,y),(990,y+6),(180,80,20),-1)
         meta={'navigation_eye':[0,0,45],'navigation_origin':[0,0,45],'R_optical_to_enu':[1,0,0,0,-1,0,0,0,-1]}
         r=Perception(cfg).step(im,meta,'air',1)
+        self.assertTrue(r['measurement']);self.assertLess(np.linalg.norm(r['position'][:2]),1)
+
+    def test_uncertain_coast_can_reacquire_real_boat_pixels(self):
+        import copy
+        cfg=copy.deepcopy(CFG);cfg['camera']['search_point_enu_m']=[0,0,.16]
+        im=np.full((1080,1920,3),(110,100,90),np.uint8)
+        for y in (523,550):cv2.rectangle(im,(930,y),(990,y+6),(180,80,20),-1)
+        meta={'navigation_eye':[0,0,45],'navigation_origin':[0,0,45],'R_optical_to_enu':[1,0,0,0,-1,0,0,0,-1]}
+        p=Perception(cfg);p.tracks['air'].update(0,np.array([20.,0.,.16]),np.eye(3)*100)
+        r=p.step(im,meta,'air',5)
         self.assertTrue(r['measurement']);self.assertLess(np.linalg.norm(r['position'][:2]),1)
 
     def test_shaded_aircraft_retains_full_span(self):

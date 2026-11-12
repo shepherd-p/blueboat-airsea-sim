@@ -11,7 +11,7 @@ from generate_model import element
 
 NS='http://www.collada.org/2005/11/COLLADASchema'
 
-def mesh_file(path,points,faces):
+def mesh_file(path,points,faces,uv=None,texture=None):
     points=np.asarray(points,dtype=float);faces=np.asarray(faces,dtype=int)
     normals=np.zeros_like(points)
     for face in faces:
@@ -25,6 +25,15 @@ def mesh_file(path,points,faces):
         return node
     root=ET.Element('{'+NS+'}COLLADA',version='1.4.1')
     asset=add(root,'asset');add(asset,'created','2026-11-08T00:00:00Z');add(asset,'modified','2026-11-08T00:00:00Z');add(asset,'unit',name='meter',meter='1');add(asset,'up_axis','Z_UP')
+    if texture is not None:
+        add(add(add(root,'library_images'),'image',id='skin-image'),'init_from',str(texture))
+        profile=add(add(add(root,'library_effects'),'effect',id='skin-effect'),'profile_COMMON')
+        add(add(add(profile,'newparam',sid='skin-surface'),'surface',type='2D'),'init_from','skin-image')
+        add(add(add(profile,'newparam',sid='skin-sampler'),'sampler2D'),'source','skin-surface')
+        shader=add(add(profile,'technique',sid='common'),'phong')
+        add(add(shader,'diffuse'),'texture',texture='skin-sampler',texcoord='UVMap')
+        add(add(shader,'ambient'),'color','1 1 1 1');add(add(shader,'specular'),'color','0 0 0 1')
+        add(add(add(root,'library_materials'),'material',id='skin-material'),'instance_effect',url='#skin-effect')
     geometry=add(add(root,'library_geometries'),'geometry',id='surface');mesh=add(geometry,'mesh')
     for name,values in (('positions',points),('normals',normals)):
         source=add(mesh,'source',id=name)
@@ -32,12 +41,25 @@ def mesh_file(path,points,faces):
         accessor=add(add(source,'technique_common'),'accessor',source='#'+name+'_data',count=str(len(values)),stride='3')
         for axis in 'XYZ':add(accessor,'param',name=axis,type='float')
     add(add(mesh,'vertices',id='vertices'),'input',semantic='POSITION',source='#positions')
-    triangles=add(mesh,'triangles',count=str(len(faces)))
+    if uv is not None:
+        uv=np.asarray(uv,dtype=float).reshape(-1,2)
+        source=add(mesh,'source',id='uv')
+        add(source,'float_array',' '.join(f'{v:.8g}' for v in uv.ravel()),id='uv_data',count=str(uv.size))
+        accessor=add(add(source,'technique_common'),'accessor',source='#uv_data',count=str(len(uv)),stride='2')
+        for axis in 'ST':add(accessor,'param',name=axis,type='float')
+    triangles=add(mesh,'triangles',count=str(len(faces)),**({'material':'skin-material'} if texture else {}))
     add(triangles,'input',semantic='VERTEX',source='#vertices',offset='0')
     add(triangles,'input',semantic='NORMAL',source='#normals',offset='1')
-    add(triangles,'p',' '.join(str(int(v)) for v in np.repeat(faces.ravel(),2)))
+    indices=np.repeat(faces.ravel()[:,None],2,axis=1)
+    if uv is not None:
+        add(triangles,'input',semantic='TEXCOORD',source='#uv',offset='2',set='0')
+        indices=np.column_stack((indices,np.arange(faces.size)))
+    add(triangles,'p',' '.join(str(int(v)) for v in indices.ravel()))
     scene=add(add(root,'library_visual_scenes'),'visual_scene',id='scene')
-    add(add(scene,'node',id='part'),'instance_geometry',url='#surface')
+    instance=add(add(scene,'node',id='part'),'instance_geometry',url='#surface')
+    if texture is not None:
+        material=add(add(add(instance,'bind_material'),'technique_common'),'instance_material',symbol='skin-material',target='#skin-material')
+        add(material,'bind_vertex_input',semantic='UVMap',input_semantic='TEXCOORD',input_set='0')
     add(add(root,'scene'),'instance_visual_scene',url='#scene')
     ET.ElementTree(root).write(path,encoding='utf-8',xml_declaration=True)
 
@@ -79,10 +101,15 @@ def wing(path,side=1,tail=False,accent=False):
     for i in range(len(stations)-1):
         for j in range(m):
             a=i*m+j;b=i*m+(j+1)%m;c=b+m;d=a+m
-            faces.extend(((a,b,c),(a,c,d)) if side>0 else ((a,c,b),(a,d,c)))
+            # Outward winding: the upper skin must face upward. Previously
+            # inward normals culled the near skin, exposing the far surface.
+            faces.extend(((a,c,b),(a,d,c)) if side>0 else ((a,b,c),(a,c,d)))
     for ring in (0,len(stations)-1):
         ids=list(range(ring*m,(ring+1)*m));center=len(points);points.append(np.mean(np.array(points)[ids],axis=0))
-        for j in range(m):faces.append((center,ids[j],ids[(j+1)%m]))
+        reverse=(ring==0)==(side>0)
+        for j in range(m):
+            a,b=ids[j],ids[(j+1)%m]
+            faces.append((center,b,a) if reverse else (center,a,b))
     mesh_file(path,points,faces)
 
 def aircraft(world,out,wingspan=1.6):
